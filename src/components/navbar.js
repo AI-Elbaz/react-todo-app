@@ -10,7 +10,7 @@ const Navbar = () => {
     {
       id: 2,
       title: "Create",
-      url: "/create",
+      url: "/task",
     },
   ];
 

@@ -15,7 +15,7 @@ function App() {
           <Route exact path="/">
             <Tasks />
           </Route>
-          <Route path="/create">
+          <Route path="/task/:id?">
             <Create />
           </Route>
         </Switch>

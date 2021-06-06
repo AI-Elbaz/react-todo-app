@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap");
 :root {
-  --gray-100: hsl(0, 0%, 95%);
+  --gray-100: hsl(0, 0%, 98%);
   --gray-200: hsl(0, 0%, 87%);
   --gray-300: hsl(0, 0%, 60%);
   --gray-400: hsl(0, 0%, 40%);
   --gray-500: hsl(216, 71%, 5%);
-  --blue-400: hsl(216, 71%, 55%);
-  --blue-500: hsl(216, 71%, 50%);
+  --blue-400: hsl(216, 71%, 60%);
+  --blue-500: hsl(216, 71%, 55%);
   --blue-600: hsl(216, 71%, 45%);
   --border-color: var(--gray-200);
   --shadow: 0px 5px 30px -8px var(--gray-200);
@@ -18,6 +18,42 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: var(--gray-100);
+}
+
+section {
+  padding: 50px 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+input[type=checkbox] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--gray-300);
+}
+input[type=checkbox]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+input[type=checkbox]:checked::before {
+  color: #fff;
+  content: "done";
+  font-size: 1.2em;
+  line-height: 1em;
+  font-family: "Material Icons";
 }
 
 .container {
@@ -49,6 +85,62 @@
   .container {
     max-width: 1320px;
   }
+}
+
+nav {
+  padding: 10px 0;
+  background-color: #fff;
+  border-bottom: 1px solid var(--border-color);
+}
+nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav .title {
+  font-size: 2em;
+  font-weight: 500;
+  line-height: 1.5em;
+  color: var(--blue-500);
+  text-transform: uppercase;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1em;
+  font-size: 1.2em;
+}
+nav ul a {
+  color: var(--gray-500);
+}
+nav ul a.active {
+  color: var(--blue-500);
+}
+
+.tasks-list {
+  width: 100%;
+  max-width: 600px;
+}
+.tasks-list .task {
+  display: flex;
+  padding: 20px;
+  gap: 1em;
+  cursor: pointer;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #fff;
+  transition: 0.3s ease-in;
+  border: 1px solid var(--border-color);
+}
+.tasks-list .task:hover {
+  border-color: #fff;
+  box-shadow: var(--shadow);
+  transition: 0.3s ease-out;
+}
+.tasks-list .task__title {
+  font-size: 1.25em;
+  font-weight: 400;
+  color: var(--gray-400);
 }
 
 /*# sourceMappingURL=index.css.map */

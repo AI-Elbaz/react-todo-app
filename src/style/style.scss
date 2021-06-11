@@ -6,15 +6,17 @@
 	--gray-300: hsl(0, 0%, 60%);
 	--gray-400: hsl(0, 0%, 40%);
 	--gray-500: hsl(216, 71%, 5%);
-
+	
 	--blue-400: hsl(216, 71%, 60%);
 	--blue-500: hsl(216, 71%, 55%);
 	--blue-600: hsl(216, 71%, 45%);
-
+	
 	--red-400: hsl(357, 71%, 65%);
 	--red-500: hsl(357, 71%, 60%);
 	--red-600: hsl(357, 71%, 55%);
 
+	--folder-icon: #ffcb23;
+	
 	--border-color: var(--gray-200);
 	--shadow: 0px 5px 30px -8px var(--gray-200);
 
@@ -159,11 +161,9 @@ nav {
 			padding: 0 20px;
 			background-color: #fff;
 			transition: 0.3s ease-in;
-			box-shadow: var(--shadow);
-	
-			&:hover {
-				border-color: #fff;
-				transition: 0.3s ease-out;
+
+			&.checked {
+				opacity: 0.7;
 			}
 	
 			&__title {
@@ -175,12 +175,40 @@ nav {
 			}
 		}
 	}
+
+	.folders-list {
+		display: grid;
+		gap: 1em;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+
+		.folder {
+			cursor: pointer;
+			padding: 20px 40px;
+			text-align: center;
+			border-radius: 12px;
+			background-color: #fff;
+			
+			&__title {
+				color: var(--gray-400);
+				font-size: 1.25em;
+			}
+
+			&__icon {
+				font-size: 3.5em;
+				color: var(--folder-icon);
+				font-family: "Material Icons";
+			}
+		}
+	}
 }
 
 .back-btn {
 	border: none;
+	border-radius: 12px;
+	padding: 10px;
 	cursor: pointer;
-	background: none;
+	background: var(--gray-200);
 	font-size: 1.5em;
 	line-height: 1em;
 	color: var(--gray-400);
@@ -250,5 +278,140 @@ nav {
 		min-width: 100%;
 		min-height: 70vh;
 		max-height: 70vh;
+	}
+}
+
+.dialog-wrapper {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.dialog-bg {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		backdrop-filter: blur( 4px );
+		background: rgba( 255, 255, 255, 0.25 );
+		box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+	}
+
+	.create-dialog {
+		z-index: 2;
+		width: 100%;
+		max-width: 400px;
+		border-radius: 12px;
+		background-color: #fff;
+		box-shadow: var(--shadow);
+	}
+
+	.icon {
+		font-family: "Material Icons";
+
+		&.main {
+			font-size: 5em;
+			color: var(--folder-icon);
+			text-align: center;
+			margin: 50px 0;
+		}
+	}
+
+	.header {
+		gap: 1em;
+		display: flex;
+		font-size: 1.25em;
+		align-items: center;
+		padding: 20px 1em 10px;
+		border-bottom: 1px solid var(--border-color);
+
+		.icon {
+			color: var(--folder-icon);
+		}
+
+		.title {
+			color: var(--gray-400);
+		}
+
+		.close-btn {
+			border: none;
+			cursor: pointer;
+			background: none;
+			margin-left: auto;
+			font-size: 1.25em;
+			color: var(--gray-400);
+			font-family: "Material Icons";
+		}
+	}
+
+	.form {
+		gap: 1em;
+		padding: 1em;
+		display: flex;
+		align-items: center;
+
+		input[type="text"] {
+			padding: 10px;
+			font-size: 1em;
+			flex-basis: 100%;
+			border-radius: 10px;
+			border: 1px solid var(--border-color);
+
+			&:focus {
+				outline: none;
+			}
+		}
+
+		input[type="submit"] {
+			border: none;
+			color: #fff;
+			padding: 10px;
+			font-size: 1em;
+			cursor: pointer;
+			border-radius: 10px;
+			background: var(--primary);
+		}
+	}
+
+}
+
+.color-picker {
+	position: relative;
+	height: 25px;
+
+	button {
+		width: 25px;
+		height: 25px;
+		border: none;
+		cursor: pointer;
+		border-radius: 50%;
+		background-color: attr(data-color);
+	}
+
+	.menu {
+		display: flex;
+		position: absolute;
+		top: 100%;
+		margin-top: 5px;
+		left: 0;
+		flex-wrap: wrap;
+		gap: 1em;
+		width: calc(4em + 92px);
+		padding: 1em;
+		border-radius: 12px;
+		background-color: #fff;
+		border: 1px solid var(--border-color);
+	}
+
+	.color {
+		width: 30px;
+		height: 30px;
+		cursor: pointer;
+		border-radius: 50%;
 	}
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import BackButton from "./backButton";
-import {getTask, deleteTask, updateTask, insertTask} from "../data/repository";
+import {getTask, deleteTask, updateTask, insertTask} from "../data/tasks-repository";
 
 const Create = () => {
   const {id} = useParams();

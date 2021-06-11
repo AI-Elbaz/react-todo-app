@@ -1,47 +1,53 @@
-import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import {getAllTasks, updateTask} from "../data/repository";
+import {useState} from "react";
+import Task from "./task";
+import Folder from "./folder";
+import CreateDialog from "./createFolderDialog";
+import {getAllTasks} from "../data/tasks-repository";
 
 const Tasks = () => {
+  const [dialog, setDialog] = useState(false);
   const tasks = getAllTasks();
+  const folders = [
+    // {
+    //   id: 1,
+    //   title: "Home"
+    // },
+    // {
+    //   id: 2,
+    //   title: "Work"
+    // },
+    // {
+    //   id: 3,
+    //   title: "School"
+    // },
+    // {
+    //   id: 3,
+    //   title: "School"
+    // }
+  ];
+
+  const handleCreate = () => {
+    setDialog(true);
+  }
 
   return (
     <section className="tasks">
+      {dialog && <CreateDialog handleClose={() => setDialog(false)}/>}
+
       <div className="container">
         <div className="tasks-list">
           {tasks ? 
-            tasks.length == 0 ? <div className="loading">You don't have any Tasks</div> : tasks.map((task) => <Task key={task.id} task={task}/>)
+            tasks.length == 0 ? <div className="loading">You don't have any Tasks</div> : tasks.map(t => <Task key={t.id} task={t}/>)
           : <div className="loading">Loading..</div>}
+        </div>
+
+        <div className="folders-list">
+        {folders &&
+          folders.length == 0 ? <Folder create={true} handleClick={handleCreate}/> : folders.map(f => <Folder key={f.id} folder={f}/>)
+        }
         </div>
       </div>
     </section>
-  );
-}
-
-const Task = ({task}) => {
-  const isInitialMount = useRef(true);
-  const [completed, setCompleted] = useState(task.completed);
-
-  const handleCheck = () => {
-    setCompleted(currn => !currn);
-  }
-
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-      let newTask = {...task, completed: completed};
-      updateTask(newTask);
-    }
-  }, [completed]);
-
-  return (
-    <div className="task">
-      <input type="checkbox" checked={completed} onChange={handleCheck}/>
-      <Link to={"/task/" + task.id} className="task__title">
-        {task.title}
-      </Link>
-    </div>
   );
 }
  

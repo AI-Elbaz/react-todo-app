@@ -1,9 +1,9 @@
-import useFetch from "../hooks/useFetch";
-import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import {getAllTasks, updateTask} from "../data/repository";
 
 const Tasks = () => {
-  const {data:tasks} = useFetch("http://localhost:8000/tasks");
+  const tasks = getAllTasks();
 
   return (
     <section className="tasks">
@@ -19,8 +19,8 @@ const Tasks = () => {
 }
 
 const Task = ({task}) => {
-  const [completed, setCompleted] = useState(task.completed);
   const isInitialMount = useRef(true);
+  const [completed, setCompleted] = useState(task.completed);
 
   const handleCheck = () => {
     setCompleted(currn => !currn);
@@ -31,23 +31,17 @@ const Task = ({task}) => {
       isInitialMount.current = false;
     } else {
       let newTask = {...task, completed: completed};
-      console.log(newTask);
-
-      fetch("http://localhost:8000/tasks/" + task.id, {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(newTask)
-      });
+      updateTask(newTask);
     }
   }, [completed]);
 
   return (
     <div className="task">
       <input type="checkbox" checked={completed} onChange={handleCheck}/>
-      <Link to={"/task/" + task.id}>
-        <p className="task__title">{task.title}</p>
+      <Link to={"/task/" + task.id} className="task__title">
+        {task.title}
       </Link>
-    </div> 
+    </div>
   );
 }
  

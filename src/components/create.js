@@ -1,51 +1,65 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import BackButton from "./backButton";
-import {getTask, deleteTask, updateTask, insertTask} from "../data/tasks-repository";
+import FolderPicker from "./folderPicker";
+import { getFolder } from "src/data/folders-repository";
+import {getTask, deleteTask, updateTask, insertTask, getAllTasks} from "../data/tasks-repository";
 
 const Create = () => {
   const {id} = useParams();
+  const history = useHistory();
+
   const [task, setTask] = useState(null);
+  const [folder, setFolder] = useState(null);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const history = useHistory();
 
   useEffect(() => {
     if (id) {
-      let task = getTask(id)
+      let task = getTask(id);
+
       setTask(task);
       setTitle(task.title);
       setDescription(task.description);
+
+      if (task.folderId) {
+        setFolder(getFolder(task.folderId));
+      }
     }
   }, [id]);
 
   const handleBackButton = () => {
     if (id) {
-      if (title !== task.title || description !== task.description) {
+      if (title !== task.title || description !== task.description || (folder && folder.id !== task.folderId)) {
         editTask();
       }
-    } else if (title.length !== 0) {
-      saveTask();
-    }
+    } else if (title.length !== 0) saveTask();
   }
 
   const saveTask = () => {
+    let folderId = folder && folder.id;
     insertTask({
       title,
       description,
+      folderId
     });
-    history.push('/');
   }
 
   const editTask = () => {
-    let editedTask = { ...task, title, description};
-    updateTask(editedTask);
+    let folderId = folder && folder.id;
+    updateTask({
+      ...task,
+      title,
+      description,
+      folderId
+    });
   }
 
   const handleDelete = () => {
     deleteTask(id);
+    console.log(getAllTasks());
     history.push("/");
   }
 
@@ -83,6 +97,7 @@ const Create = () => {
         <div className="header">
           <BackButton callback={handleBackButton}/>
           {task && <p className="date">{formatDate(task.date)}</p>}
+          <FolderPicker key={folder} value={folder} onChange={setFolder}/>
           {task && <button className="delete-btn" onClick={handleDelete}>Delete</button>}
         </div>
         <form>

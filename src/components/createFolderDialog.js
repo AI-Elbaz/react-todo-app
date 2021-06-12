@@ -8,10 +8,12 @@ const CreateDialog = ({handleClose}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    insertFolder({
-      title,
-      color
-    });
+    if (title !== "") {
+      insertFolder({
+        title,
+        color
+      });
+    }
     handleClose();
   }
 

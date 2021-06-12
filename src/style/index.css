@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap");
 :root {
   --gray-100: hsl(0, 0%, 96%);
+  --gray-150: hsl(0, 0%, 90%);
   --gray-200: hsl(0, 0%, 87%);
   --gray-300: hsl(0, 0%, 60%);
   --gray-400: hsl(0, 0%, 40%);
@@ -122,6 +123,7 @@ nav ul a.active {
 }
 
 .loading {
+  text-align: center;
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -140,11 +142,13 @@ nav ul a.active {
   gap: 1em;
   width: 100%;
   max-width: 600px;
+  position: relative;
   flex-direction: column;
 }
 .tasks .tasks-list .task {
   display: flex;
   gap: 1em;
+  position: relative;
   cursor: pointer;
   align-items: center;
   border-radius: 12px;
@@ -153,7 +157,14 @@ nav ul a.active {
   transition: 0.3s ease-in;
 }
 .tasks .tasks-list .task.checked {
-  opacity: 0.7;
+  opacity: 0.6;
+}
+.tasks .tasks-list .task .badge {
+  left: 0;
+  width: 4px;
+  border-radius: 5px;
+  height: 50%;
+  position: absolute;
 }
 .tasks .tasks-list .task__title {
   width: 100%;
@@ -174,6 +185,8 @@ nav ul a.active {
   text-align: center;
   border-radius: 12px;
   background-color: #fff;
+  transition: border-color 0.3s ease-in-out;
+  border: 2px solid transparent;
 }
 .tasks .folders-list .folder__title {
   color: var(--gray-400);
@@ -279,6 +292,7 @@ nav ul a.active {
   box-shadow: var(--shadow);
 }
 .dialog-wrapper .icon {
+  user-select: none;
   font-family: "Material Icons";
 }
 .dialog-wrapper .icon.main {
@@ -296,6 +310,7 @@ nav ul a.active {
   border-bottom: 1px solid var(--border-color);
 }
 .dialog-wrapper .header .icon {
+  user-select: none;
   color: var(--folder-icon);
 }
 .dialog-wrapper .header .title {
@@ -317,11 +332,12 @@ nav ul a.active {
   align-items: center;
 }
 .dialog-wrapper .form input[type=text] {
+  border: none;
   padding: 10px;
   font-size: 1em;
   flex-basis: 100%;
   border-radius: 10px;
-  border: 1px solid var(--border-color);
+  background-color: var(--gray-150);
 }
 .dialog-wrapper .form input[type=text]:focus {
   outline: none;
@@ -367,6 +383,49 @@ nav ul a.active {
   height: 30px;
   cursor: pointer;
   border-radius: 50%;
+}
+
+.folder-picker {
+  cursor: pointer;
+  position: relative;
+}
+.folder-picker .color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.folder-picker .active-folder {
+  gap: 0.5em;
+  display: flex;
+  padding: 0.6em;
+  border-radius: 10px;
+  align-items: center;
+  color: var(--gray-400);
+  transition: 0.3s ease-in-out;
+}
+.folder-picker .active-folder:hover {
+  background-color: var(--gray-150);
+}
+.folder-picker .items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 5px;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+}
+.folder-picker .items .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gray-400);
+  padding: 10px;
+  width: 150px;
+}
+.folder-picker .items .item:hover {
+  background-color: var(--gray-150);
 }
 
 /*# sourceMappingURL=index.css.map */

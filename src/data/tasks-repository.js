@@ -15,16 +15,16 @@ export const insertTask = (task) => {
 }
 
 export const getTask = (id) => {
-  return getAllTasks().filter((i) => i.id == id)[0];
+  return getAllTasks().filter(i => i.id == id)[0];
 }
 
 export const deleteTask = (id) => {
-  let tasks = getAllTasks().filter(i => i.id !== id);
+  let tasks = getAllTasks().filter(i => i.id != id);
   db.setItem('tasks', JSON.stringify(tasks));
 }
 
 export const updateTask = (task) => {
-  let tasks = getAllTasks().filter(i => i.id !== task.id);
+  let tasks = getAllTasks().filter(i => i.id != task.id);
   task.edited = true;
   task.date = new Date();
   tasks.push(task);

@@ -1,16 +1,16 @@
 import {useState, useEffect} from 'react';
 
 const ColorPicker = ({onChange}) => {
-  const colors = {
-    blue: "#0396FF",
-    yellow: "#ffcb23",
-    red: "#EA5455",
-    green: "#28C76F",
-    turquoise: "#32CCBC",
-    purple: "#7367F0",
-  };
+  const colors =[
+    "#ffcb23",
+    "#0396FF",
+    "#EA5455",
+    "#28C76F",
+    "#32CCBC",
+    "#7367F0",
+  ];
 
-  const [activeColor, setactiveColor] = useState(colors.yellow);
+  const [activeColor, setactiveColor] = useState(colors[0]);
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const ColorPicker = ({onChange}) => {
         onClick={() => setShowMenu(!showMenu)}></button>
 
       {showMenu && <div className="menu">
-        {Object.values(colors).map(c =>
+        {colors.map(c =>
           <div
             key={c}
             className="color"

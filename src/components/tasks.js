@@ -1,38 +1,45 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Task from "./task";
 import Folder from "./folder";
 import CreateDialog from "./createFolderDialog";
 import {getAllTasks} from "../data/tasks-repository";
+import { getAllFolders } from "src/data/folders-repository";
 
 const Tasks = () => {
+  const [tasks, setTasks] = useState(null);
+  const [folders, setFolders] = useState(null);
   const [dialog, setDialog] = useState(false);
-  const tasks = getAllTasks();
-  const folders = [
-    // {
-    //   id: 1,
-    //   title: "Home"
-    // },
-    // {
-    //   id: 2,
-    //   title: "Work"
-    // },
-    // {
-    //   id: 3,
-    //   title: "School"
-    // },
-    // {
-    //   id: 3,
-    //   title: "School"
-    // }
-  ];
+  const [activeFolder, setActiveFolder] = useState(null);
+
+  useEffect(() => {
+    setFolders(getAllFolders());
+    if (!activeFolder) {
+      setTasks(getAllTasks());
+    } else {
+      setTasks(getAllTasks().filter(t => t.folderId == activeFolder));
+    }
+  }, [activeFolder])
 
   const handleCreate = () => {
     setDialog(true);
   }
 
+  const handleActiveFolder = (id) => {
+    if (activeFolder !== id) {
+      setActiveFolder(id);
+    } else {
+      setActiveFolder(null);
+    }
+  }
+
+  const closeDialog = () => {
+    setDialog(false);
+    setFolders(getAllFolders());
+  }
+
   return (
     <section className="tasks">
-      {dialog && <CreateDialog handleClose={() => setDialog(false)}/>}
+      {dialog && <CreateDialog handleClose={closeDialog}/>}
 
       <div className="container">
         <div className="tasks-list">
@@ -42,9 +49,8 @@ const Tasks = () => {
         </div>
 
         <div className="folders-list">
-        {folders &&
-          folders.length == 0 ? <Folder create={true} handleClick={handleCreate}/> : folders.map(f => <Folder key={f.id} folder={f}/>)
-        }
+        {folders && folders.map(f => <Folder key={f.id} folder={f} active={activeFolder == f.id} handleClick={handleActiveFolder}/>)}
+        <Folder create={true} handleClick={handleCreate}/>
         </div>
       </div>
     </section>

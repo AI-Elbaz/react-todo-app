@@ -12,6 +12,10 @@
   --red-400: hsl(357, 71%, 65%);
   --red-500: hsl(357, 71%, 60%);
   --red-600: hsl(357, 71%, 55%);
+  --foreground: #fff;
+  --background: var(--gray-100);
+  --dark-foreground: hsl(0, 0%, 10%);
+  --dark-background: hsl(0, 0%, 5%);
   --folder-icon: #ffcb23;
   --border-color: var(--gray-200);
   --shadow: 0px 5px 30px -8px var(--gray-200);
@@ -25,8 +29,17 @@
   font-family: "Poppins", sans-serif;
 }
 
+html.dark-mode {
+  --gray-150: hsl(0, 0%, 15%);
+  --gray-200: hsl(0, 0%, 20%);
+  --gray-400: hsl(0, 0%, 80%);
+  --gray-500: hsl(216, 71%, 95%);
+  --background: var(--dark-background);
+  --foreground: var(--dark-foreground);
+}
+
 body {
-  background-color: var(--gray-100);
+  background-color: var(--background);
 }
 
 section {
@@ -94,13 +107,12 @@ input[type=checkbox]:checked::before {
 
 nav {
   padding: 10px 0;
-  background-color: #fff;
+  background-color: var(--foreground);
   border-bottom: 1px solid var(--border-color);
 }
 nav .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 nav .title {
   font-size: 2em;
@@ -114,6 +126,7 @@ nav ul {
   list-style: none;
   gap: 1em;
   font-size: 1.2em;
+  margin-left: auto;
 }
 nav ul a {
   color: var(--gray-500);
@@ -153,8 +166,8 @@ nav ul a.active {
   align-items: center;
   border-radius: 12px;
   padding: 0 20px;
-  background-color: #fff;
-  transition: 0.3s ease-in;
+  background-color: var(--foreground);
+  transition: opacity 0.3s ease-in;
 }
 .tasks .tasks-list .task.checked {
   opacity: 0.6;
@@ -184,7 +197,7 @@ nav ul a.active {
   padding: 20px 40px;
   text-align: center;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--foreground);
   transition: border-color 0.3s ease-in-out;
   border: 2px solid transparent;
 }
@@ -194,6 +207,7 @@ nav ul a.active {
 }
 .tasks .folders-list .folder__icon {
   font-size: 3.5em;
+  user-select: none;
   color: var(--folder-icon);
   font-family: "Material Icons";
 }
@@ -288,7 +302,7 @@ nav ul a.active {
   width: 100%;
   max-width: 400px;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--foreground);
   box-shadow: var(--shadow);
 }
 .dialog-wrapper .icon {
@@ -337,6 +351,7 @@ nav ul a.active {
   font-size: 1em;
   flex-basis: 100%;
   border-radius: 10px;
+  color: var(--gray-400);
   background-color: var(--gray-150);
 }
 .dialog-wrapper .form input[type=text]:focus {
@@ -375,7 +390,7 @@ nav ul a.active {
   width: calc(4em + 92px);
   padding: 1em;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--foreground);
   border: 1px solid var(--border-color);
 }
 .color-picker .color {
@@ -413,7 +428,7 @@ nav ul a.active {
   margin-top: 5px;
   overflow: hidden;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--foreground);
   border: 1px solid var(--border-color);
 }
 .folder-picker .items .item {
@@ -426,6 +441,20 @@ nav ul a.active {
 }
 .folder-picker .items .item:hover {
   background-color: var(--gray-150);
+}
+
+.darkmode-btn {
+  font-family: "Material Icons";
+  background-color: var(--foreground);
+  color: var(--gray-400);
+  font-size: 1.5em;
+  user-select: none;
+  cursor: pointer;
+  transform: rotate(160deg);
+  box-shadow: 0px -1px 15px -3px var(--gray-200);
+  padding: 7px;
+  border-radius: 50%;
+  margin: 0 1em;
 }
 
 /*# sourceMappingURL=index.css.map */

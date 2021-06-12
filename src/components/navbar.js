@@ -1,4 +1,5 @@
 import {Link, NavLink} from 'react-router-dom';
+import DarkModeSwitch from "./darkModeSwitch";
 
 const Navbar = () => {
   const tabs = [
@@ -25,6 +26,7 @@ const Navbar = () => {
             </li>
           )}
         </ul>
+        <DarkModeSwitch />
       </div>
     </nav>
    );

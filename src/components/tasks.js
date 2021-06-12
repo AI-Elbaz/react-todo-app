@@ -3,13 +3,24 @@ import Task from "./task";
 import Folder from "./folder";
 import CreateDialog from "./createFolderDialog";
 import {getAllTasks} from "../data/tasks-repository";
-import { getAllFolders } from "src/data/folders-repository";
+import { getAllFolders, getFolder } from "src/data/folders-repository";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(null);
   const [folders, setFolders] = useState(null);
   const [dialog, setDialog] = useState(false);
   const [activeFolder, setActiveFolder] = useState(null);
+  const [showFolders, setShowFolders] = useState(true);
+  
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 992px)');
+    mediaQuery.onchange = e => {
+      if (e.matches) setShowFolders(true);
+    };
+    return () => {
+      mediaQuery.onchange = null;
+    }
+  }, [])
 
   useEffect(() => {
     setFolders(getAllFolders());
@@ -18,7 +29,7 @@ const Tasks = () => {
     } else {
       setTasks(getAllTasks().filter(t => t.folderId == activeFolder));
     }
-  }, [activeFolder])
+  }, [activeFolder]);
 
   const handleCreate = () => {
     setDialog(true);
@@ -48,10 +59,18 @@ const Tasks = () => {
           : <div className="loading">Loading..</div>}
         </div>
 
-        <div className="folders-list">
-        {folders && folders.map(f => <Folder key={f.id} folder={f} active={activeFolder == f.id} handleClick={handleActiveFolder}/>)}
-        <Folder create={true} handleClick={handleCreate}/>
+        <div className="folders-wrapper">
+          <div className="folders-toggler" onClick={() => setShowFolders(!showFolders)}>
+            <h2>Folders</h2>
+            {activeFolder && <span className="active-folder">&nbsp;| {getFolder(activeFolder).title}</span>}
+            <span className="icon">{showFolders ? "expand_less" :"expand_more"}</span>
+          </div>
+          {showFolders && <div className="folders-list">
+          {folders && folders.map(f => <Folder key={f.id} folder={f} active={activeFolder == f.id} handleClick={handleActiveFolder}/>)}
+          <Folder create={true} handleClick={handleCreate}/>
+          </div>}
         </div>
+        
       </div>
     </section>
   );

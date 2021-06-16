@@ -1,12 +1,10 @@
-const Folder = ({folder, handleClick, create=false, active}) => {
+import FolderIcon from '@material-ui/icons/Folder';
 
-  const icon = create ? "add" : "folder";
-  const title = create ? "create" : folder.title;
-
+const Folder = ({folder, handleClick, active}) => {
   return (
-    <div className="folder" onClick={() => handleClick((folder && folder.id) || null)} style={{borderColor: active && folder.color}}>
-      <div className="folder__icon" style={{color: folder && folder.color}}>{icon}</div>
-      <div className="folder__title">{title}</div>
+    <div className="folder" onClick={() => handleClick(folder?.id)} style={{borderColor: active && folder.color}}>
+      <FolderIcon className="folder__icon" style={{color: folder.color}}/>
+      <div className="folder__title">{folder.title}</div>
     </div>
   );
 }

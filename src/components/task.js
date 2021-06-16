@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {updateTask} from "../data/tasks-repository";
 import { useEffect, useState, useRef } from "react";
-import { getFolder } from "src/data/folders-repository";
+import { getFolder } from "../data/folders-repository";
 
 const Task = ({task}) => {
   const isInitialMount = useRef(true);

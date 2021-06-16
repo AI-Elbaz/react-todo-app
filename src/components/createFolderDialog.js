@@ -1,10 +1,20 @@
+import {useState, useEffect} from 'react';
+import { useStore } from 'react-context-hook';
+import {getAllFolders, insertFolder} from "../data/folders-repository";
 import ColorPicker from './colorPicker';
-import {useState} from 'react';
-import {insertFolder} from "../data/folders-repository";
 
-const CreateDialog = ({handleClose}) => {
+const CreateDialog = () => {
   const [title, setTitle] = useState('');
   const [color, setColor] = useState(null);
+  const [folders, setFolders, deleteFolders] = useStore('data.folders');
+  const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
+
+  useEffect(() => {
+    window.onscroll = () => window.scrollTo(0, 0);
+    return () => {
+      window.onscroll = null;
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,11 +24,12 @@ const CreateDialog = ({handleClose}) => {
         color
       });
     }
+    setFolders(getAllFolders());
     handleClose();
   }
 
-  const handleColor = (c) => {
-    setColor(c);
+  const handleClose = () => {
+    setDialog(false);
   }
 
   return (
@@ -39,9 +50,7 @@ const CreateDialog = ({handleClose}) => {
             placeholder="Folder title"
             onChange={e => setTitle(e.target.value)}
           />
-
-          <ColorPicker onChange={handleColor}/>
-
+          <ColorPicker onChange={setColor}/>
           <input
             type="submit"
             value="Create"

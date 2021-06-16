@@ -1,10 +1,14 @@
-import { getAllFolders } from "src/data/folders-repository";
-import {useState} from "react";
+import { getAllFolders } from "../data/folders-repository";
+import {useState, useEffect} from "react";
 
 const FolderPicker = ({onChange, value}) => {
   const folders = getAllFolders();
   const [showItems, setShowItems] = useState(false);
   const [activeFolder, setActiveFolder] = useState(value);
+
+  useEffect(() => {
+    setActiveFolder(value);
+  }, [value]);
 
   const handleActiveFolder = (folder) => {
     setActiveFolder(folder);

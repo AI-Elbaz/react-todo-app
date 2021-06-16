@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect} from "react";
+import DropDown from "./dropDown";
 
 const ColorPicker = ({onChange}) => {
   const colors =[
@@ -10,37 +11,27 @@ const ColorPicker = ({onChange}) => {
     "#7367F0",
   ];
 
-  const [activeColor, setactiveColor] = useState(colors[0]);
-  const [showMenu, setShowMenu] = useState(false);
+  const [color, setColor] = useState(colors[0]);
 
   useEffect(() => {
-    onChange(activeColor);
-  }, [activeColor]);
-
-  const handleColorClick = (c) => {
-    setactiveColor(c);
-    setShowMenu(false);
-    onChange(c);
-  }
+    onChange(color);
+  }, [color])
   
-  return ( 
-    <div className="color-picker">
-      <button
-        data-color={activeColor}
-        style={{background: activeColor}}
-        onClick={() => setShowMenu(!showMenu)}></button>
-
-      {showMenu && <div className="menu">
-        {colors.map(c =>
-          <div
-            key={c}
-            className="color"
-            onClick={() => handleColorClick(c)}
-            style={{background: c}}
-            data-color={c}></div>
-        )}
-      </div>}
-    </div>
+  return (
+    <DropDown
+      onChange={setColor}
+      className="color-picker"
+      renderInput={<button style={{background: color}}></button>}
+      renderItems={
+        <div className="color-picker__menu">
+          {colors.map(c =>
+            <div
+              key={c}
+              className='color-picker__color'
+              style={{background: c}}
+              data-value={c}></div>
+          )}
+        </div>}/>
   );
 }
  

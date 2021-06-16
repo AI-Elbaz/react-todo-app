@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import { getSetting, setSetting } from "src/data/settings-repository";
+import { getSetting, setSetting } from "../data/settings-repository";
 
 const DarkModeSwitch = () => {
   const [darkMode, setDarkMode] = useState(getSetting('darkMode') || false);

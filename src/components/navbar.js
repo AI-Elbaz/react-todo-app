@@ -1,30 +1,19 @@
 import {Link, NavLink} from 'react-router-dom';
+import CreateBtnDropDown from './createBtnDropDown';
 import DarkModeSwitch from "./darkModeSwitch";
 
 const Navbar = () => {
-  const tabs = [
-    {
-      id: 1,
-      title: "Tasks",
-      url: "/",
-    },
-    {
-      id: 2,
-      title: "Create",
-      url: "/task",
-    },
-  ];
-
-  return ( 
+  return (
     <nav>
       <div className="container">
         <Link to="/" className="title">Todos</Link>
         <ul>
-          {tabs.map(tab =>
-            <li key={tab.id}>
-              <NavLink exact to={tab.url}>{tab.title}</NavLink>  
-            </li>
-          )}
+          <li>
+            <NavLink exact to='/'>Home</NavLink>  
+          </li>
+          <li>
+            <CreateBtnDropDown />
+          </li>
         </ul>
         <DarkModeSwitch />
       </div>

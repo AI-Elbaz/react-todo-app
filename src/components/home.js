@@ -1,14 +1,13 @@
 import {useEffect, useState} from "react";
 import Task from "./task";
 import Folder from "./folder";
-import CreateDialog from "./createFolderDialog";
+import { useStore } from "react-context-hook";
 import {getAllTasks} from "../data/tasks-repository";
-import { getAllFolders, getFolder } from "src/data/folders-repository";
+import { getAllFolders, getFolder } from "../data/folders-repository";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(null);
-  const [folders, setFolders] = useState(null);
-  const [dialog, setDialog] = useState(false);
+  const [folders, setFolders, deleteFolders] = useStore('data.folders', getAllFolders());
   const [activeFolder, setActiveFolder] = useState(null);
   const [showFolders, setShowFolders] = useState(true);
   
@@ -23,7 +22,6 @@ const Tasks = () => {
   }, [])
 
   useEffect(() => {
-    setFolders(getAllFolders());
     if (!activeFolder) {
       setTasks(getAllTasks());
     } else {
@@ -31,27 +29,12 @@ const Tasks = () => {
     }
   }, [activeFolder]);
 
-  const handleCreate = () => {
-    setDialog(true);
-  }
-
   const handleActiveFolder = (id) => {
-    if (activeFolder !== id) {
-      setActiveFolder(id);
-    } else {
-      setActiveFolder(null);
-    }
-  }
-
-  const closeDialog = () => {
-    setDialog(false);
-    setFolders(getAllFolders());
+    setActiveFolder(activeFolder !== id ? id : null);
   }
 
   return (
     <section className="tasks">
-      {dialog && <CreateDialog handleClose={closeDialog}/>}
-
       <div className="container">
         <div className="tasks-list">
           {tasks ? 
@@ -67,10 +50,8 @@ const Tasks = () => {
           </div>
           {showFolders && <div className="folders-list">
           {folders && folders.map(f => <Folder key={f.id} folder={f} active={activeFolder == f.id} handleClick={handleActiveFolder}/>)}
-          <Folder create={true} handleClick={handleCreate}/>
           </div>}
         </div>
-        
       </div>
     </section>
   );

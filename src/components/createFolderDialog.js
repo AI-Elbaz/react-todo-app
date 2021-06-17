@@ -11,9 +11,7 @@ const CreateDialog = () => {
 
   useEffect(() => {
     window.onscroll = () => window.scrollTo(0, 0);
-    return () => {
-      window.onscroll = null;
-    }
+    return () => window.onscroll = null;
   }, []);
 
   const handleSubmit = (e) => {
@@ -25,10 +23,6 @@ const CreateDialog = () => {
       });
     }
     setFolders(getAllFolders());
-    handleClose();
-  }
-
-  const handleClose = () => {
     setDialog(false);
   }
 
@@ -39,7 +33,7 @@ const CreateDialog = () => {
         <div className="header">
           <div className="icon">folder</div>
           <p className="title">Create Folder</p>
-          <button className="close-btn" onClick={handleClose}>close</button>
+          <button className="close-btn" onClick={() => setDialog(false)}>close</button>
         </div>
         <div className="icon main" style={{color: color}}>folder</div>
         <div className="form">

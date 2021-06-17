@@ -1,5 +1,5 @@
-import {useState, useEffect} from "react";
-import DropDown from "./dropDown";
+import { useState } from 'react';
+import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
 
 const ColorPicker = ({onChange}) => {
   const colors =[
@@ -13,26 +13,26 @@ const ColorPicker = ({onChange}) => {
 
   const [color, setColor] = useState(colors[0]);
 
-  useEffect(() => {
-    onChange(color);
-  }, [color])
-  
+  const handleSelect = (v, e) => {
+    const {value} = e.target.dataset
+    setColor(value);
+    onChange(value);
+  }
+
   return (
-    <DropDown
-      onChange={setColor}
-      className="color-picker"
-      renderInput={<button style={{background: color}}></button>}
-      renderItems={
-        <div className="color-picker__menu">
-          {colors.map(c =>
-            <div
-              key={c}
-              className='color-picker__color'
-              style={{background: c}}
-              data-value={c}></div>
+    <Wrapper className='drop-down color-picker' onSelection={handleSelect} required={false}>
+      <Button className="button" style={{background: color}} children={false}></Button>
+      <Menu>
+        <ul className='menu'>
+          {colors.map((v, i) =>
+            <li key={i}>
+              <MenuItem className="color" style={{background: v}} data-value={v} children={false}></MenuItem>
+            </li>
           )}
-        </div>}/>
+        </ul>
+      </Menu>
+    </Wrapper>
   );
 }
- 
+
 export default ColorPicker;

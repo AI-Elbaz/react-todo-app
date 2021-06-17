@@ -8,6 +8,7 @@ import {getTask, deleteTask, updateTask, insertTask, getAllTasks} from "../data/
 const Create = () => {
   const {id} = useParams();
   const history = useHistory();
+  const form = useRef();
 
   const [task, setTask] = useState(null);
   const [folder, setFolder] = useState(null);
@@ -18,6 +19,13 @@ const Create = () => {
   const componentWillUnmount = useRef(false);
 
   useEffect(() => {
+    const f = form.current;
+    const s = document.querySelector('section');
+    let padding = parseInt(
+      window.getComputedStyle(s, null).getPropertyValue('padding-top').replace('px', ''));
+
+    f.style.height = `calc(100vh - ${f.offsetTop + padding}px)`;
+
     if (id) {
       let task = getTask(id);
 
@@ -110,7 +118,7 @@ const Create = () => {
           <FolderPicker value={folder} onChange={setFolder}/>
           {task && <button className="delete-btn" onClick={handleDelete}>Delete</button>}
         </div>
-        <form>
+        <form ref={form}>
           <input
             type="text"
             required

@@ -1,39 +1,42 @@
-import { getAllFolders } from "../data/folders-repository";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from 'react';
+import {getAllFolders, getFolder} from '../data/folders-repository';
+import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
 
-const FolderPicker = ({onChange, value}) => {
+const FolderPicker = ({value, onChange}) => {
   const folders = getAllFolders();
-  const [showItems, setShowItems] = useState(false);
-  const [activeFolder, setActiveFolder] = useState(value);
+  const [activeFolder, setActiveFolder] = useState(null);
 
   useEffect(() => {
     setActiveFolder(value);
-  }, [value]);
+  }, [value])
 
-  const handleActiveFolder = (folder) => {
+  const handleSelect = (v, e) => {
+    const folder = getFolder(e.target.dataset.value);
     setActiveFolder(folder);
-    setShowItems(!showItems);
     onChange(folder);
   }
 
   return (
-    <div className="folder-picker">
-      <div className="active-folder" onClick={() => setShowItems(!showItems)}>
-        <div
-          className="color-dot"
-          style={{background: (activeFolder && activeFolder.color) || "var(--gray-300)"}}></div>
-        {(activeFolder && activeFolder.title) || "Choose folder"}
-      </div>
-
-      {showItems && <div className="items">
-        {folders.map(f => 
-          <div key={f.id} className="item" onClick={() => handleActiveFolder(f)}>
-            <div className="color-dot" style={{background: f.color}}></div>
-            {f.title}
-          </div>
-        )}
-      </div>}
-    </div>
+    <Wrapper className='drop-down folder-picker' onSelection={handleSelect}>
+      <Button className='active-folder'>
+      <div
+        className="folder-picker__color-dot"
+        style={{background: activeFolder?.color || "var(--gray-300)"}}></div>
+        {activeFolder?.title || "Choose folder"}
+      </Button>
+      <Menu className='menu'>
+        <ul>
+          {folders.map(f =>
+            <li key={f.id}>
+              <MenuItem className='item' data-value={f.id}>
+                <div className="folder-picker__color-dot" style={{background: f.color}}></div>
+                {f.title}
+              </MenuItem>
+            </li>  
+          )}
+        </ul>
+      </Menu>
+    </Wrapper>
   );
 }
  

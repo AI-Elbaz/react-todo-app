@@ -1,6 +1,6 @@
 import {Link, NavLink} from 'react-router-dom';
-import CreateBtnDropDown from './createBtnDropDown';
 import DarkModeSwitch from "./darkModeSwitch";
+import CreateDropDown from './createDropDown';
 
 const Navbar = () => {
   return (
@@ -12,7 +12,7 @@ const Navbar = () => {
             <NavLink exact to='/'>Home</NavLink>  
           </li>
           <li>
-            <CreateBtnDropDown />
+            <CreateDropDown />
           </li>
         </ul>
         <DarkModeSwitch />

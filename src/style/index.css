@@ -43,7 +43,12 @@ body {
 }
 
 section {
-  padding: 50px 0;
+  padding: 30px 0;
+}
+@media only screen and (max-width: 576px) {
+  section {
+    padding: 10px 0;
+  }
 }
 
 a {
@@ -117,12 +122,13 @@ nav .container {
 nav .title {
   font-size: 2em;
   font-weight: 500;
-  line-height: 1.5em;
+  line-height: 1em;
   color: var(--blue-500);
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 nav .nav__create-btn {
   border: none;
+  display: block;
   color: #fff;
   line-height: 1em;
   font-size: 0.85em;
@@ -137,20 +143,17 @@ nav .nav__create-btn {
 nav .nav__create-btn:hover {
   background-color: var(--blue-400);
 }
-nav .create-drop-down__menu {
-  margin: 5px 0;
-}
-nav .create-drop-down__menu .item {
+nav .drop-down .item {
   display: block;
   color: var(--gray-500);
   font-size: 0.875em;
   padding: 8px 10px;
   cursor: pointer;
 }
-nav .create-drop-down__menu .item:hover {
+nav .drop-down .item:hover {
   background-color: var(--gray-200);
 }
-nav ul {
+nav .container > ul {
   display: flex;
   list-style: none;
   gap: 1em;
@@ -158,10 +161,10 @@ nav ul {
   font-size: 1.2em;
   margin-left: auto;
 }
-nav ul a {
+nav .container > ul a {
   color: var(--gray-500);
 }
-nav ul a.active {
+nav .container > ul a.active {
   color: var(--blue-500);
 }
 
@@ -227,7 +230,7 @@ nav ul a.active {
 .tasks .folders-toggler {
   display: none;
   cursor: pointer;
-  padding: 10px 1em;
+  padding: 1em;
   margin-bottom: 1em;
   border-radius: 12px;
   align-items: center;
@@ -340,10 +343,9 @@ nav ul a.active {
 }
 .create textarea {
   font-size: 1.25em;
-  max-width: 100%;
+  flex: 0 1 100%;
   min-width: 100%;
-  min-height: 70vh;
-  max-height: 70vh;
+  max-width: 100%;
 }
 
 .dialog-wrapper {
@@ -444,34 +446,35 @@ nav ul a.active {
 }
 
 .color-picker {
-  height: 25px;
+  --width: 30px;
+  height: fit-content;
 }
-.color-picker button {
-  width: 25px;
-  height: 25px;
+.color-picker .button {
+  width: var(--width);
+  height: var(--width);
+  display: block;
   border: none;
   cursor: pointer;
   border-radius: 50%;
-  background-color: attr(data-color);
 }
-.color-picker__menu {
+.color-picker .menu {
+  list-style: none;
   display: grid;
-  gap: 1em;
-  padding: 1em;
+  gap: 0.7em;
+  padding: 0.7em;
   grid-template-columns: repeat(3, 1fr);
 }
-.color-picker__color {
-  width: 30px;
-  height: 30px;
+.color-picker .color {
+  width: var(--width);
+  height: var(--width);
   cursor: pointer;
   border-radius: 50%;
 }
 
 .folder-picker {
   cursor: pointer;
-  position: relative;
 }
-.folder-picker .color-dot {
+.folder-picker__color-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -488,25 +491,15 @@ nav ul a.active {
 .folder-picker .active-folder:hover {
   background-color: var(--gray-150);
 }
-.folder-picker .items {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 5px;
-  overflow: hidden;
-  border-radius: 12px;
-  background-color: var(--foreground);
-  border: 1px solid var(--border-color);
-}
-.folder-picker .items .item {
-  display: flex;
-  align-items: center;
+.folder-picker .menu .item {
   gap: 10px;
-  color: var(--gray-400);
-  padding: 10px;
   width: 150px;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  color: var(--gray-400);
 }
-.folder-picker .items .item:hover {
+.folder-picker .menu .item:hover {
   background-color: var(--gray-150);
 }
 
@@ -522,6 +515,22 @@ nav ul a.active {
   padding: 7px;
   border-radius: 50%;
   margin: 0 1em;
+}
+
+.drop-down {
+  position: relative;
+}
+.drop-down .menu {
+  min-width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  position: absolute;
+  margin-top: 5px;
+  left: 0;
+  top: 100%;
+  color: var(--gray-500);
+  background-color: var(--foreground);
+  border: 1px solid var(--border-color);
 }
 
 /*# sourceMappingURL=index.css.map */

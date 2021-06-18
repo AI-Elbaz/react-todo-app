@@ -1,30 +1,22 @@
 import { Link } from "react-router-dom";
 import {updateTask} from "../data/tasks-repository";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getFolder } from "../data/folders-repository";
 
-const Task = ({task}) => {
-  const isInitialMount = useRef(true);
-  const [completed, setCompleted] = useState(task.completed);
+const Task = ({task, onCheck}) => {
   const folder = getFolder(task.folderId);
-
-  const handleCheck = () => {
-    setCompleted(currn => !currn);
-  }
-
+  const [completed, setCompleted] = useState(task.completed);
+  
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-      let newTask = {...task, completed: completed};
-      updateTask(newTask);
-    }
+    let newTask = {...task, completed: completed};
+    updateTask(newTask);
+    onCheck(completed);
   }, [completed]);
 
   return (
     <div className={`task ${completed ? "checked" : ""}`}>
       <div className="badge" style={{background: folder ? folder.color : "var(--gray-300)"}}></div>
-      <input type="checkbox" checked={completed} onChange={handleCheck}/>
+      <input type="checkbox" checked={completed} onChange={() => setCompleted(currn => !currn)}/>
       <Link to={"/task/" + task.id} className="task__title">
         {task.title}
       </Link>

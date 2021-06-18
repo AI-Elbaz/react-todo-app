@@ -9,16 +9,18 @@ const Tasks = () => {
   const [tasks, setTasks] = useState(null);
   const [folders, setFolders, deleteFolders] = useStore('data.folders', getAllFolders());
   const [activeFolder, setActiveFolder] = useState(null);
-  const [showFolders, setShowFolders] = useState(true);
+  const [showFolders, setShowFolders, deleteShowFolders] = useStore('showFoldersList');
   
+  const handleResize = (mediaQuery) => {
+    if (mediaQuery.matches) setShowFolders(true);
+    else setShowFolders(false);
+  }
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 992px)');
-    mediaQuery.onchange = e => {
-      if (e.matches) setShowFolders(true);
-    };
-    return () => {
-      mediaQuery.onchange = null;
-    }
+    mediaQuery.onchange = handleResize;
+    handleResize(mediaQuery);
+    return () => mediaQuery.onchange = null;
   }, [])
 
   useEffect(() => {
@@ -33,12 +35,16 @@ const Tasks = () => {
     setActiveFolder(activeFolder !== id ? id : null);
   }
 
+  const handleTaskCheck = () => {
+    setFolders(getAllFolders());
+  }
+
   return (
     <section className="tasks">
       <div className="container">
         <div className="tasks-list">
           {tasks ? 
-            tasks.length == 0 ? <div className="loading">You don't have any Tasks</div> : tasks.map(t => <Task key={t.id} task={t}/>)
+            tasks.length == 0 ? <div className="loading">You don't have any Tasks</div> : tasks.map(t => <Task key={t.id} task={t} onCheck={handleTaskCheck}/>)
           : <div className="loading">Loading..</div>}
         </div>
 
@@ -56,5 +62,5 @@ const Tasks = () => {
     </section>
   );
 }
- 
+
 export default Tasks;

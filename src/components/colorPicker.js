@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
 
 const ColorPicker = ({onChange}) => {
@@ -6,17 +6,20 @@ const ColorPicker = ({onChange}) => {
     "#ffcb23",
     "#0396FF",
     "#EA5455",
-    "#28C76F",
+    "#20DB90",
     "#32CCBC",
     "#7367F0",
   ];
 
   const [color, setColor] = useState(colors[0]);
 
+  useEffect(() => {
+    onChange(color);
+  }, [color]);
+
   const handleSelect = (v, e) => {
     const {value} = e.target.dataset
     setColor(value);
-    onChange(value);
   }
 
   return (

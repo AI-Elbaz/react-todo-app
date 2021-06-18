@@ -143,16 +143,6 @@ nav .nav__create-btn {
 nav .nav__create-btn:hover {
   background-color: var(--blue-400);
 }
-nav .drop-down .item {
-  display: block;
-  color: var(--gray-500);
-  font-size: 0.875em;
-  padding: 8px 10px;
-  cursor: pointer;
-}
-nav .drop-down .item:hover {
-  background-color: var(--gray-200);
-}
 nav .container > ul {
   display: flex;
   list-style: none;
@@ -260,27 +250,61 @@ nav .container > ul a.active {
   gap: 1em;
   width: 100%;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, 152px);
+  grid-template-columns: repeat(auto-fit, 200px);
+}
+.tasks .folders-list .folder-wrapper {
+  cursor: pointer;
+  position: relative;
+}
+.tasks .folders-list .folder-wrapper:hover .drop-down {
+  opacity: 1;
+}
+.tasks .folders-list .drop-down {
+  z-index: 1;
+  position: absolute;
+  opacity: 0;
+  right: 0;
+  top: 0;
+  margin: 10px 5px;
+  color: var(--gray-400);
+  transition: opacity 0.2s ease-in-out;
 }
 .tasks .folders-list .folder {
-  cursor: pointer;
-  padding: 20px 0;
-  text-align: center;
+  z-index: 0;
+  position: relative;
+  padding: 20px;
+  user-select: none;
   border-radius: 12px;
+  border: 2px solid transparent;
   background-color: var(--foreground);
   transition: border-color 0.3s ease-in-out;
-  border: 2px solid transparent;
 }
-.tasks .folders-list .folder__title {
-  font-size: 1.25em;
-  color: var(--gray-400);
-  text-transform: capitalize;
+.tasks .folders-list .folder.active {
+  border-color: var(--color);
 }
 .tasks .folders-list .folder__icon {
-  font-size: 3.5em;
-  user-select: none;
-  color: var(--folder-icon);
+  font-size: 4.5em;
+  color: var(--color);
+  margin: -11px 0 0 -5px;
   font-family: "Material Icons";
+}
+.tasks .folders-list .folder__title-container {
+  display: flex;
+  color: var(--color);
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.tasks .folders-list .folder__title {
+  font-size: 1.45em;
+  line-height: 1.45em;
+  text-transform: capitalize;
+}
+.tasks .folders-list .folder__counter {
+  font-size: 0.875em;
+  color: var(--gray-300);
+}
+.tasks .folders-list .folder__percentage {
+  font-size: 1.125em;
 }
 
 .back-btn {
@@ -350,7 +374,7 @@ nav .container > ul a.active {
 
 .dialog-wrapper {
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   top: 0;
   left: 0;
   width: 100%;
@@ -367,7 +391,7 @@ nav .container > ul a.active {
   background: rgba(255, 255, 255, 0.25);
 }
 .dialog-wrapper .create-dialog {
-  z-index: 2;
+  z-index: 1000;
   width: 100%;
   max-width: 400px;
   border-radius: 12px;
@@ -526,11 +550,22 @@ nav .container > ul a.active {
   border-radius: 10px;
   position: absolute;
   margin-top: 5px;
+  z-index: 100;
   left: 0;
   top: 100%;
   color: var(--gray-500);
   background-color: var(--foreground);
   border: 1px solid var(--border-color);
+}
+.drop-down .item {
+  display: block;
+  color: var(--gray-500);
+  font-size: 0.875em;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.drop-down .item:hover {
+  background-color: var(--gray-200);
 }
 
 /*# sourceMappingURL=index.css.map */

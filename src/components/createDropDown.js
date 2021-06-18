@@ -18,8 +18,8 @@ const CreateDropDown = () => {
       <Menu className='menu'>
         <ul>
           {options.map(i => 
-            <li key={i}>
-              <MenuItem className="item">{i}</MenuItem>
+            <li key={i} className="item">
+              <MenuItem >{i}</MenuItem>
             </li>
           )}
         </ul>

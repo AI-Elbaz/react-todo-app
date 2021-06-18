@@ -106,7 +106,9 @@ const Create = () => {
       'December'
     ];
     let h = tConv(d.getHours());
-    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${h[0]}:${d.getMinutes()}${h[1]}`;
+    const zfill = (m) => m < 10 ? "0"+m : m;
+
+    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${h[0]}:${zfill(d.getMinutes())}${h[1]}`;
   }
 
   return ( 

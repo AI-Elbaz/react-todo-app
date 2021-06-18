@@ -153,18 +153,6 @@ nav {
 		}
 	}
 
-	.drop-down .item {
-		display: block;
-		color: var(--gray-500);
-		font-size: 0.875em;
-		padding: 8px 10px;
-		cursor: pointer;
-		
-		&:hover {
-			background-color: var(--gray-200);
-		}
-	}
-
 	.container > ul {
 		display: flex;
 		list-style: none;
@@ -286,28 +274,69 @@ nav {
 		gap: 1em;
 		width: 100%;
 		justify-content: center;
-		grid-template-columns: repeat(auto-fit, 152px);
+		grid-template-columns: repeat(auto-fit, 200px);
+
+		.folder-wrapper {
+			cursor: pointer;
+			position: relative;
+
+			&:hover .drop-down {
+				opacity: 1;
+			}
+		}
+
+		.drop-down {
+			z-index: 1;
+			position: absolute;
+			opacity: 0;
+			right: 0;
+			top: 0;
+			margin: 10px 5px;
+			color: var(--gray-400);
+			transition: opacity 0.2s ease-in-out;
+		}
 
 		.folder {
-			cursor: pointer;
-			padding: 20px 0;
-			text-align: center;
+			z-index: 0;
+			position: relative;
+			padding: 20px;
+			user-select: none;
 			border-radius: 12px;
+			border: 2px solid transparent;
 			background-color: var(--foreground);
 			transition: border-color 0.3s ease-in-out;
-			border: 2px solid transparent;
+
+			&.active {
+				border-color: var(--color);
+			}
 			
+			&__icon {
+				font-size: 4.5em;
+				color: var(--color);
+				margin: -11px 0 0 -5px;
+				font-family: "Material Icons";
+			}
+
+			&__title-container {
+				display: flex;
+				color: var(--color);
+				align-items: flex-end;
+				justify-content: space-between;
+			}
+
 			&__title {
-				font-size: 1.25em;
-				color: var(--gray-400);
+				font-size: 1.45em;
+				line-height: 1.45em;
 				text-transform: capitalize;
 			}
 
-			&__icon {
-				font-size: 3.5em;
-				user-select: none;
-				color: var(--folder-icon);
-				font-family: "Material Icons";
+			&__counter {
+				font-size: 0.875em;
+				color: var(--gray-300);
+			}
+
+			&__percentage {
+				font-size: 1.125em;
 			}
 		}
 	}
@@ -392,7 +421,7 @@ nav {
 
 .dialog-wrapper {
 	position: absolute;
-	z-index: 1;
+	z-index: 999;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -411,7 +440,7 @@ nav {
 	}
 
 	.create-dialog {
-		z-index: 2;
+		z-index: 1000;
 		width: 100%;
 		max-width: 400px;
 		border-radius: 12px;
@@ -591,10 +620,23 @@ nav {
     border-radius: 10px;
 		position: absolute;
 		margin-top: 5px;
+		z-index: 100;
 		left: 0;
 		top: 100%;
 		color: var(--gray-500);
 		background-color: var(--foreground);
 		border: 1px solid var(--border-color);
+	}
+
+	.item {
+		display: block;
+		color: var(--gray-500);
+		font-size: 0.875em;
+		padding: 8px 10px;
+		cursor: pointer;
+		
+		&:hover {
+			background-color: var(--gray-200);
+		}
 	}
 }

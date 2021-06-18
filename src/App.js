@@ -30,6 +30,7 @@ const App = () => {
 
 const initialState = {
   showCreateFolderDialog: false,
+  showFoldersList: false,
   data: {
     folders: getAllFolders()
   }

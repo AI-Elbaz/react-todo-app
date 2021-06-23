@@ -1,20 +1,18 @@
 import {useStore, withStore} from 'react-context-hook';
-import Tasks from './components/home';
-import Navbar from './components/navbar';
-import Create from './components/create';
-import CreateDialog from './components/createFolderDialog';
+import {Tasks, Create, Folders} from './views/views';
+import {Navbar,  CreateDialog, SideMenu} from './components/components';
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom';
-import { getAllFolders } from './data/folders-repository';
+import {TasksRepo, FoldersRepo} from './data/repository';
 
 const App = () => {
   const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
 
   return (
-    <>
+    <div className="app">
       <Router>
-        <Navbar />
         {dialog && <CreateDialog />}
-
+        <Navbar />
+        <SideMenu />
         <Switch>
           <Route exact path="/">
             <Tasks />
@@ -22,18 +20,23 @@ const App = () => {
           <Route path="/task/:id?">
             <Create />
           </Route>
+          <Route path="/folders">
+            <Folders />
+          </Route>
         </Switch>
       </Router>
-    </>
+    </div>
   );
 }
 
 const initialState = {
   showCreateFolderDialog: false,
-  showFoldersList: false,
+  sideMenu: false,
+  activeFolder: null,
   data: {
-    folders: getAllFolders()
+    tasks: TasksRepo.getAllData(),
+    folders: FoldersRepo.getAllData(),
   }
-}
+};
 
 export default withStore(App, initialState);

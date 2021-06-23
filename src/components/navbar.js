@@ -1,21 +1,26 @@
+import { useStore } from 'react-context-hook';
 import {Link, NavLink} from 'react-router-dom';
-import DarkModeSwitch from "./darkModeSwitch";
-import CreateDropDown from './createDropDown';
+import {CreateDropDown, DarkModeSwitch} from './components';
+import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 
 const Navbar = () => {
+  const [sideMenu, setSideMenu, deleteSideMenu] = useStore('sideMenu');
+
   return (
-    <nav>
+    <nav style={{display: 'flex'}}>
+      <button className="side-menu__toggler" onClick={() => setSideMenu(!sideMenu)}>
+        <MenuRoundedIcon />
+      </button>
       <div className="container">
         <Link to="/" className="title">Todos</Link>
         <ul>
           <li>
-            <NavLink exact to='/'>Home</NavLink>  
-          </li>
-          <li>
             <CreateDropDown />
           </li>
+          <li>
+            <DarkModeSwitch />
+          </li>
         </ul>
-        <DarkModeSwitch />
       </div>
     </nav>
    );

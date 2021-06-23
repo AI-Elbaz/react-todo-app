@@ -1,7 +1,10 @@
+import {ColorPicker} from './components';
 import {useState, useEffect} from 'react';
 import { useStore } from 'react-context-hook';
-import {getAllFolders, insertFolder} from "../data/folders-repository";
-import ColorPicker from './colorPicker';
+import { FoldersRepo } from '../data/repository';
+
+import FolderIcon from '@material-ui/icons/Folder';
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 
 const CreateDialog = () => {
   const [title, setTitle] = useState('');
@@ -17,12 +20,9 @@ const CreateDialog = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title !== "") {
-      insertFolder({
-        title,
-        color
-      });
+      FoldersRepo.insertItem({title, color});
     }
-    setFolders(getAllFolders());
+    setFolders(FoldersRepo.getAllData());
     setDialog(false);
   }
 
@@ -31,11 +31,13 @@ const CreateDialog = () => {
       <div className="dialog-bg"></div>
       <div className="create-dialog">
         <div className="header">
-          <div className="icon">folder</div>
+          <FolderIcon />
           <p className="title">Create Folder</p>
-          <button className="close-btn" onClick={() => setDialog(false)}>close</button>
+          <button className="close-btn" onClick={() => setDialog(false)}>
+            <CloseRoundedIcon />
+          </button>
         </div>
-        <div className="icon main" style={{color: color}}>folder</div>
+        <FolderIcon style={{color: color}} className='preview-icon'/>
         <div className="form">
           <input
             required

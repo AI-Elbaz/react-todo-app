@@ -1,10 +1,13 @@
 import { useHistory } from "react-router";
+import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 
 const BackButton = () => {
     const history = useHistory();
 
     return (
-        <button className="back-btn" onClick={() => history.push('/')}>arrow_back_ios_new</button>
+        <button className="back-btn" onClick={() => history.goBack()}>
+            <ArrowBackIosRoundedIcon />
+        </button>
     );
 }
  

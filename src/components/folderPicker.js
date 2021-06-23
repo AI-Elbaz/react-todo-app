@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import {getAllFolders, getFolder} from '../data/folders-repository';
+import { FoldersRepo } from '../data/repository';
 import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
 
 const FolderPicker = ({value, onChange}) => {
-  const folders = getAllFolders();
+  const folders = FoldersRepo.getAllData();
   const [activeFolder, setActiveFolder] = useState(null);
 
   useEffect(() => {
     setActiveFolder(value);
-  }, [value])
+  }, [value]);
 
   const handleSelect = (v, e) => {
-    const folder = getFolder(e.target.dataset.value);
+    const folder = FoldersRepo.getItem(e.target.dataset.value);
     setActiveFolder(folder);
     onChange(folder);
   }

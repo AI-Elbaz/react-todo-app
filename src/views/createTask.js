@@ -1,9 +1,8 @@
+import { useStore } from "react-context-hook";
 import { useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router";
-import BackButton from "./backButton";
-import FolderPicker from "./folderPicker";
-import { getFolder } from "../data/folders-repository";
-import {getTask, deleteTask, updateTask, insertTask, getAllTasks} from "../data/tasks-repository";
+import { TasksRepo, FoldersRepo } from "../data/repository";
+import {BackButton, FolderPicker, RepeatingPicker} from '../components/components';
 
 const Create = () => {
   const {id} = useParams();
@@ -15,8 +14,17 @@ const Create = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [tasks, setTasks, deleteTasks] = useStore('data.tasks');
 
   const componentWillUnmount = useRef(false);
+
+  const repeatingOptions = {
+    DAILY: 'Daily',
+    WEEKLY: 'Weekly',
+    MONTHLY: 'Monthly',
+    YEARLY: 'Yearly',
+    NONE: null,
+  };
 
   useEffect(() => {
     const f = form.current;
@@ -27,14 +35,14 @@ const Create = () => {
     f.style.height = `calc(100vh - ${f.offsetTop + padding}px)`;
 
     if (id) {
-      let task = getTask(id);
+      let task = TasksRepo.getItem(id);
 
       setTask(task);
       setTitle(task.title);
       setDescription(task.description);
 
       if (task.folderId) {
-        setFolder(getFolder(task.folderId));
+        setFolder(FoldersRepo.getItem(task.folderId));
       }
     }
   }, [id]);
@@ -44,7 +52,13 @@ const Create = () => {
   }, []);
 
   useEffect(() => {
-    return () => {if (componentWillUnmount.current) handleSave()};
+    return () => {
+      if (componentWillUnmount.current) {
+        console.log('willUnMount');
+        handleSave();
+        setTasks(TasksRepo.getAllData());
+      }
+    };
   }, [title, description, folder]);
 
   const handleSave = () => {
@@ -59,7 +73,7 @@ const Create = () => {
 
   const saveTask = () => {
     let folderId = folder && folder.id;
-    insertTask({
+    TasksRepo.insertItem({
       title,
       description,
       folderId
@@ -68,7 +82,7 @@ const Create = () => {
 
   const editTask = () => {
     let folderId = folder && folder.id;
-    updateTask({
+    TasksRepo.updateItem({
       ...task,
       title,
       description,
@@ -77,9 +91,9 @@ const Create = () => {
   }
 
   const handleDelete = () => {
-    deleteTask(id);
-    console.log(getAllTasks());
-    history.push("/");
+    TasksRepo.deleteItem(id);
+    console.log(TasksRepo.getAllData());
+    history.goBack();
   }
 
   const tConv = (t) => {
@@ -111,6 +125,20 @@ const Create = () => {
     return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${h[0]}:${zfill(d.getMinutes())}${h[1]}`;
   }
 
+  const handleRepeatingChange = (option) => {
+    // const d = task?.date;
+    // let newDate;
+
+    // switch (option) {
+    //   case repeatingOptions.DAILY:
+    //     newDate = new Date(d).setDa
+    //     break;
+    
+    //   default:
+    //     break;
+    // }
+  }
+
   return ( 
     <section className="create">
       <div className="container">
@@ -118,6 +146,7 @@ const Create = () => {
           <BackButton />
           {task && <p className="date">{formatDate(task.date)}</p>}
           <FolderPicker value={folder} onChange={setFolder}/>
+          <RepeatingPicker options={repeatingOptions} onChange={handleRepeatingChange}/>
           {task && <button className="delete-btn" onClick={handleDelete}>Delete</button>}
         </div>
         <form ref={form}>

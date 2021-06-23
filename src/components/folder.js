@@ -1,12 +1,11 @@
-import FolderIcon from '@material-ui/icons/Folder';
-import {Wrapper, Button, Menu, MenuItem} from 'react-aria-menubutton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import {deleteFolder, getAllFolders} from '../data/folders-repository';
-import {getAllTasks} from '../data/tasks-repository';
 import {useStore} from 'react-context-hook';
+import FolderIcon from '@material-ui/icons/Folder';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { TasksRepo, FoldersRepo } from '../data/repository';
+import {Wrapper, Button, Menu, MenuItem} from 'react-aria-menubutton';
 
 const Folder = ({folder, handleClick, active}) => {
-  const tasks = getAllTasks()
+  const tasks = TasksRepo.getAllData();
   const folderTasks = tasks.filter(t => t.folderId == folder.id);
   const completedTasks = folderTasks.filter(t => t.completed);
 
@@ -33,8 +32,8 @@ const SettingsDropDown = ({folderId}) => {
   const [folders, setFolders, deleteFolders] = useStore('data.folders');
 
   const handleDelete = () => {
-    deleteFolder(folderId);
-    setFolders(getAllFolders());
+    FoldersRepo.deleteItem(folderId)
+    setFolders(FoldersRepo.getAllData());
   }
 
   return (

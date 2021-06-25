@@ -1,4 +1,5 @@
 import Task from './task';
+import Note from './note';
 import Folder from './folder';
 import Navbar from './navbar';
 import SideMenu from './sideMenu';
@@ -9,6 +10,7 @@ import CreateDropDown from './createDropDown';
 import DarkModeSwitch from './darkModeSwitch';
 import CreateDialog from './createFolderDialog';
 import RepeatingPicker from './repeatingDropDown';
+import SectionHeader from './sectionHeader';
 
 export {
   Task,
@@ -22,4 +24,6 @@ export {
   BackButton,
   ColorPicker,
   CreateDropDown,
+  Note,
+  SectionHeader,
 };

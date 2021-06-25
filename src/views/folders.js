@@ -1,18 +1,11 @@
-import { useEffect } from "react";
 import { useStore } from "react-context-hook";
-import {Folder} from "../components/components";
-import { TasksRepo, FoldersRepo } from "../data/repository";
+import { Folder, SectionHeader } from "../components/components";
+import { FoldersRepo } from "../data/repository";
 
 const Folders = () => {
-  const [tasks, setTasks, deleteTasks] = useStore('data.tasks');
   const [activeFolder, setActiveFolder, deleteActiveFolder] = useStore('activeFolder');
   const [folders, setFolders, deleteFolders] = useStore('data.folders', FoldersRepo.getAllData());
-
-  useEffect(() => {
-    let newTasks = TasksRepo.getAllData();
-    if (activeFolder) newTasks = newTasks.filter(t => t.folderId == activeFolder);
-    setTasks(newTasks);
-  }, [activeFolder]);
+  const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
 
   const handleActiveFolder = (id) => {
     setActiveFolder(activeFolder !== id ? id : null);
@@ -20,19 +13,19 @@ const Folders = () => {
 
   return (
     <section className="folders">
-      <div className="container">
-        <div className="folders-list">
-          {folders &&
-            folders.map(f => 
-              <Folder
-                key={f.id}
-                folder={f} 
-                active={activeFolder == f.id}
-                handleClick={handleActiveFolder}/>)}
-        </div>
+      <SectionHeader title='Folders' onCreate={() => setDialog(true)}/>
+      <div className="container" data-empty="Folders">
+        {folders.length !== 0 && <div className="folders-list">
+          {folders.map(f =>
+            <Folder
+              key={f.id}
+              folder={f}
+              active={activeFolder == f.id}
+              handleClick={handleActiveFolder} />)}
+        </div>}
       </div>
     </section>
   );
 }
- 
+
 export default Folders;

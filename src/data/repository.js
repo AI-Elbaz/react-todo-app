@@ -7,6 +7,15 @@ class Repository {
     this.template = template;
   }
 
+  generateId = () => {
+    const data = this.getAllData().sort((a, b) => a.id - b.id);
+    const length = data.length;
+    for (let i = 1; i <= length; i++) {
+      if (i !== data[i - 1].id) return i;
+    }
+    return length + 1;
+  }
+
   getAllData = () => {
     let data = JSON.parse(localStorage.getItem(this.key)) || this.default;
     if (Array.isArray(data)) {
@@ -21,7 +30,7 @@ class Repository {
 
   createEntity = (item) => {
     let date = new Date();
-    let id = this.getAllData().length + 1;
+    let id = this.generateId();
     return {...this.template, ...item, date, id};
   }
 

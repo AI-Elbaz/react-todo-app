@@ -1,27 +1,70 @@
-import {useStore, withStore} from 'react-context-hook';
-import {Tasks, Create, Folders} from './views/views';
-import {Navbar,  CreateDialog, SideMenu} from './components/components';
-import {Switch, Route, BrowserRouter as Router} from 'react-router-dom';
-import {TasksRepo, FoldersRepo} from './data/repository';
+import { useStore, withStore } from 'react-context-hook';
+import { useEffect } from 'react';
+import { Tasks, Folders, Notes, Create, Settings } from './views/views';
+import { CreateDialog, SideMenu } from './components/components';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { TasksRepo, FoldersRepo, NotesRepo, SettingsRepo } from './data/repository';
 
 const App = () => {
   const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
+  const [activeFolder, setactiveFolder, deleteactiveFolder] = useStore('activeFolder');
+  const [tasks, setTasks, deleteTasks] = useStore('data.tasks');
+  const [notes, setNotes, deleteNotes] = useStore('data.notes');
+  const [darkMode, setDarkMode, deleteDarkMode] = useStore('darkMode');
+
+  useEffect(() => {
+    const r = document.querySelector('html');
+    r.className = darkMode ? "dark-mode" : "";
+
+    if (darkMode) SettingsRepo.setData({'darkMode': true});
+    else SettingsRepo.setData({'darkMode': false});
+  }, [darkMode]);
+
+  useEffect(() => {
+    let newTasks = TasksRepo.getAllData();
+    let newNotes = NotesRepo.getAllData();
+
+    if (activeFolder) {
+      newTasks = newTasks.filter(t => t.folderId == activeFolder);
+      newNotes = newNotes.filter(t => t.folderId == activeFolder);
+    }
+
+    setTasks(newTasks);
+    setNotes(newNotes);
+  }, [activeFolder]);
 
   return (
     <div className="app">
       <Router>
         {dialog && <CreateDialog />}
-        <Navbar />
+        {/* <Navbar /> */}
         <SideMenu />
         <Switch>
           <Route exact path="/">
             <Tasks />
           </Route>
           <Route path="/task/:id?">
-            <Create />
+            <Create
+              showRepeating={true}
+              repository={TasksRepo}
+              store='data.tasks'
+            />
+          </Route>
+          <Route path="/note/:id?">
+            <Create
+              showRepeating={false}
+              repository={NotesRepo}
+              store='data.notes'
+            />
           </Route>
           <Route path="/folders">
             <Folders />
+          </Route>
+          <Route path="/notes">
+            <Notes />
+          </Route>
+          <Route path="/settings">
+            <Settings />
           </Route>
         </Switch>
       </Router>
@@ -33,9 +76,11 @@ const initialState = {
   showCreateFolderDialog: false,
   sideMenu: false,
   activeFolder: null,
+  darkMode: SettingsRepo.getAllData().darkMode,
   data: {
     tasks: TasksRepo.getAllData(),
     folders: FoldersRepo.getAllData(),
+    notes: NotesRepo.getAllData(),
   }
 };
 

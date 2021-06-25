@@ -12,7 +12,7 @@ const Navbar = () => {
         <MenuRoundedIcon />
       </button>
       <div className="container">
-        <Link to="/" className="title">Todos</Link>
+        <Link to="/" className="title">MySpace</Link>
         <ul>
           <li>
             <CreateDropDown />

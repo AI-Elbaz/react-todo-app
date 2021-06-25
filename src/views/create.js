@@ -1,10 +1,10 @@
 import { useStore } from "react-context-hook";
 import { useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router";
-import { TasksRepo, FoldersRepo } from "../data/repository";
+import { FoldersRepo } from "../data/repository";
 import {BackButton, FolderPicker, RepeatingPicker} from '../components/components';
 
-const Create = () => {
+const Create = ({repository, showRepeating, store}) => {
   const {id} = useParams();
   const history = useHistory();
   const form = useRef();
@@ -14,7 +14,7 @@ const Create = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [tasks, setTasks, deleteTasks] = useStore('data.tasks');
+  const [tasks, setTasks, deleteTasks] = useStore(store);
 
   const componentWillUnmount = useRef(false);
 
@@ -27,15 +27,8 @@ const Create = () => {
   };
 
   useEffect(() => {
-    const f = form.current;
-    const s = document.querySelector('section');
-    let padding = parseInt(
-      window.getComputedStyle(s, null).getPropertyValue('padding-top').replace('px', ''));
-
-    f.style.height = `calc(100vh - ${f.offsetTop + padding}px)`;
-
     if (id) {
-      let task = TasksRepo.getItem(id);
+      let task = repository.getItem(id);
 
       setTask(task);
       setTitle(task.title);
@@ -48,15 +41,21 @@ const Create = () => {
   }, [id]);
 
   useEffect(() => {
+    const f = form.current;
+    const s = document.querySelector('section');
+    let padding = parseInt(
+      window.getComputedStyle(s, null).getPropertyValue('padding-top').replace('px', ''));
+
+    f.style.height = `calc(100vh - ${f.offsetTop + padding}px)`;
+
     return () => componentWillUnmount.current = true;
   }, []);
 
   useEffect(() => {
     return () => {
       if (componentWillUnmount.current) {
-        console.log('willUnMount');
         handleSave();
-        setTasks(TasksRepo.getAllData());
+        setTasks(repository.getAllData());
       }
     };
   }, [title, description, folder]);
@@ -73,7 +72,7 @@ const Create = () => {
 
   const saveTask = () => {
     let folderId = folder && folder.id;
-    TasksRepo.insertItem({
+    repository.insertItem({
       title,
       description,
       folderId
@@ -82,7 +81,7 @@ const Create = () => {
 
   const editTask = () => {
     let folderId = folder && folder.id;
-    TasksRepo.updateItem({
+    repository.updateItem({
       ...task,
       title,
       description,
@@ -91,15 +90,14 @@ const Create = () => {
   }
 
   const handleDelete = () => {
-    TasksRepo.deleteItem(id);
-    console.log(TasksRepo.getAllData());
+    repository.deleteItem(id);
     history.goBack();
   }
 
   const tConv = (t) => {
-    if (t < 12) return [t, "AM"];
-    else if (t == 12) return [t, "PM"];
-    return [t-12, "PM"];
+    if (t == 0 || t == 24) return [12, 'AM'];
+    else if (t == 12) return [12, 'PM'];
+    return [t-12, 'PM'];
   }
 
   const formatDate = (date) => {
@@ -146,10 +144,10 @@ const Create = () => {
           <BackButton />
           {task && <p className="date">{formatDate(task.date)}</p>}
           <FolderPicker value={folder} onChange={setFolder}/>
-          <RepeatingPicker options={repeatingOptions} onChange={handleRepeatingChange}/>
+          {showRepeating && <RepeatingPicker options={repeatingOptions} onChange={handleRepeatingChange}/>}
           {task && <button className="delete-btn" onClick={handleDelete}>Delete</button>}
         </div>
-        <form ref={form}>
+        <form ref={form} className="edit-form">
           <input
             type="text"
             required

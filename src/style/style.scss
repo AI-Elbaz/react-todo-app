@@ -83,7 +83,7 @@ section {
 	padding: 30px 0 30px var(--side-menu-width);
 
 	@media only screen and (max-width: 576px) {
-		padding: 10px 10px 10px calc(var(--side-menu-width) + 10px);
+		padding: 10px 0 10px var(--side-menu-width);
 	}
 }
 
@@ -424,6 +424,7 @@ section.folders {
 	.header {
 		display: flex;
 		gap: 1em;
+		flex-wrap: wrap;
 		align-items: center;
 		margin-bottom: 20px;
 	}
@@ -441,7 +442,6 @@ section.folders {
 		font-size: 0.9em;
 		line-height: 1em;
 		font-weight: 500;
-		margin-left: auto;
 		border-radius: 5px;
 		color: var(--red-500);
 		transition: 0.3s ease-in-out;
@@ -473,10 +473,12 @@ section.folders {
 		background: rgba(255, 255, 255, 0.25);
 	}
 
-	.create-dialog {
-		width: 100%;
+	.container {
 		z-index: 1000;
-		max-width: 400px;
+		max-width: 450px;
+	}
+
+	.create-dialog {
 		border-radius: 12px;
 		box-shadow: var(--shadow);
 		background-color: var(--foreground);
@@ -484,8 +486,8 @@ section.folders {
 
 	.preview-icon {
 		width: 100%;
-		font-size: 7rem;
 		margin: 40px 0;
+		font-size: 7rem;
 		text-align: center;
 		color: var(--folder-icon);
 	}
@@ -523,26 +525,42 @@ section.folders {
 		display: flex;
 		align-items: center;
 		border-top: 1px solid var(--border-color);
+		
+		@media only screen and (max-width: 576px) {
+			flex-wrap: wrap;
 
+			input {
+				padding: 1rem !important;
+			}
+		}
+		
+		& > div {
+			gap: inherit;
+			display: flex;
+			flex-basis: 100%;
+			align-items: center;
+		}
+		
 		input[type="text"] {
 			border: none;
 			padding: 10px;
-			font-size: 1.125em;
 			flex-basis: 100%;
+			font-size: 1.125em;
 			border-radius: 8px;
 			color: var(--gray-400);
 			background-color: var(--gray-150);
-
+			
 			&:focus {
 				outline: none;
 			}
 		}
-
+		
 		input[type="submit"] {
 			border: none;
 			color: var(--primary);
 			padding: 10px 12px;
 			align-self: stretch;
+			flex-basis: 100%;
 			font-size: 1em;
 			cursor: pointer;
 			font-weight: 500;
@@ -689,7 +707,7 @@ section.folders {
 		position: absolute;
 		margin-top: 5px;
 		z-index: 100;
-		left: 0;
+		right: 0;
 		top: 100%;
 		color: var(--gray-500);
 		background-color: var(--foreground);

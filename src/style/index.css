@@ -71,7 +71,7 @@ section {
 }
 @media only screen and (max-width: 576px) {
   section {
-    padding: 10px 10px 10px calc(var(--side-menu-width) + 10px);
+    padding: 10px 0 10px var(--side-menu-width);
   }
 }
 
@@ -382,6 +382,7 @@ section.folders .folders-list .folder__percentage {
 .create .header {
   display: flex;
   gap: 1em;
+  flex-wrap: wrap;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -397,7 +398,6 @@ section.folders .folders-list .folder__percentage {
   font-size: 0.9em;
   line-height: 1em;
   font-weight: 500;
-  margin-left: auto;
   border-radius: 5px;
   color: var(--red-500);
   transition: 0.3s ease-in-out;
@@ -425,18 +425,19 @@ section.folders .folders-list .folder__percentage {
   backdrop-filter: blur(4px);
   background: rgba(255, 255, 255, 0.25);
 }
-.dialog-wrapper .create-dialog {
-  width: 100%;
+.dialog-wrapper .container {
   z-index: 1000;
-  max-width: 400px;
+  max-width: 450px;
+}
+.dialog-wrapper .create-dialog {
   border-radius: 12px;
   box-shadow: var(--shadow);
   background-color: var(--foreground);
 }
 .dialog-wrapper .preview-icon {
   width: 100%;
-  font-size: 7rem;
   margin: 40px 0;
+  font-size: 7rem;
   text-align: center;
   color: var(--folder-icon);
 }
@@ -470,11 +471,25 @@ section.folders .folders-list .folder__percentage {
   align-items: center;
   border-top: 1px solid var(--border-color);
 }
+@media only screen and (max-width: 576px) {
+  .dialog-wrapper .form {
+    flex-wrap: wrap;
+  }
+  .dialog-wrapper .form input {
+    padding: 1rem !important;
+  }
+}
+.dialog-wrapper .form > div {
+  gap: inherit;
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+}
 .dialog-wrapper .form input[type=text] {
   border: none;
   padding: 10px;
-  font-size: 1.125em;
   flex-basis: 100%;
+  font-size: 1.125em;
   border-radius: 8px;
   color: var(--gray-400);
   background-color: var(--gray-150);
@@ -487,6 +502,7 @@ section.folders .folders-list .folder__percentage {
   color: var(--primary);
   padding: 10px 12px;
   align-self: stretch;
+  flex-basis: 100%;
   font-size: 1em;
   cursor: pointer;
   font-weight: 500;
@@ -614,7 +630,7 @@ section.folders .folders-list .folder__percentage {
   position: absolute;
   margin-top: 5px;
   z-index: 100;
-  left: 0;
+  right: 0;
   top: 100%;
   color: var(--gray-500);
   background-color: var(--foreground);

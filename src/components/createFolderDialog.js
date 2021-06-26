@@ -29,29 +29,33 @@ const CreateDialog = () => {
   return (
     <div className="dialog-wrapper">
       <div className="dialog-bg"></div>
-      <div className="create-dialog">
-        <div className="header">
-          <FolderIcon />
-          <p className="title">Create Folder</p>
-          <button className="close-btn" onClick={() => setDialog(false)}>
-            <CloseRoundedIcon />
-          </button>
-        </div>
-        <FolderIcon style={{ color: color }} className='preview-icon' />
-        <div className="form">
-          <input
-            required
-            type="text"
-            value={title}
-            placeholder="Folder title"
-            onChange={e => setTitle(e.target.value)}
-          />
-          <ColorPicker onChange={setColor} />
-          <input
-            type="submit"
-            value="Create"
-            onClick={handleSubmit}
-          />
+      <div className="container">
+        <div className="create-dialog">
+          <div className="header">
+            <FolderIcon />
+            <p className="title">Create Folder</p>
+            <button className="close-btn" onClick={() => setDialog(false)}>
+              <CloseRoundedIcon />
+            </button>
+          </div>
+          <FolderIcon style={{ color: color }} className='preview-icon' />
+          <div className="form">
+            <div>
+              <input
+                required
+                type="text"
+                value={title}
+                placeholder="Folder title"
+                onChange={e => setTitle(e.target.value)}
+              />
+              <ColorPicker onChange={setColor} />
+            </div>
+            <input
+              type="submit"
+              value="Create"
+              onClick={handleSubmit}
+            />
+          </div>
         </div>
       </div>
     </div>

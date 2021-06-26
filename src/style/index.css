@@ -65,8 +65,9 @@ body {
 }
 
 section {
+  display: flex;
   min-height: 100vh;
-  position: relative;
+  flex-direction: column;
   padding: 30px 0 30px var(--side-menu-width);
 }
 @media only screen and (max-width: 576px) {
@@ -80,6 +81,11 @@ h1 {
   font-weight: 500;
   line-height: 1.5em;
   color: var(--gray-400);
+}
+@media only screen and (max-width: 576px) {
+  h1 {
+    font-size: 2.25rem;
+  }
 }
 
 a {
@@ -111,12 +117,8 @@ input[type=checkbox]:checked::before {
 }
 
 section .container[data-empty]:empty {
-  top: 50%;
-  left: 50%;
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  transform: translate(-50%, -50%);
+  margin: auto 0;
+  text-align: center;
 }
 section .container[data-empty]:empty::before {
   content: "You Don't have any " attr(data-empty);
@@ -468,7 +470,7 @@ section.folders .folders-list .folder__percentage {
   gap: 1em;
   padding: 1em;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   border-top: 1px solid var(--border-color);
 }
 @media only screen and (max-width: 576px) {
@@ -478,12 +480,18 @@ section.folders .folders-list .folder__percentage {
   .dialog-wrapper .form input {
     padding: 1rem !important;
   }
+  .dialog-wrapper .form .color-picker .button {
+    padding: 27px;
+  }
 }
 .dialog-wrapper .form > div {
   gap: inherit;
   display: flex;
   flex-basis: 100%;
   align-items: center;
+}
+.dialog-wrapper .form > div > * {
+  height: 100%;
 }
 .dialog-wrapper .form input[type=text] {
   border: none;
@@ -501,7 +509,6 @@ section.folders .folders-list .folder__percentage {
   border: none;
   color: var(--primary);
   padding: 10px 12px;
-  align-self: stretch;
   flex-basis: 100%;
   font-size: 1em;
   cursor: pointer;
@@ -517,21 +524,19 @@ section.folders .folders-list .folder__percentage {
 
 .color-picker {
   --width: 30px;
-  height: fit-content;
 }
 .color-picker .button {
-  width: var(--width);
-  height: var(--width);
+  padding: 21px;
   display: block;
   border: none;
   cursor: pointer;
   border-radius: 8px;
 }
 .color-picker .menu {
-  list-style: none;
-  display: grid;
   gap: 0.7em;
+  display: grid;
   padding: 0.7em;
+  list-style: none;
   grid-template-columns: repeat(3, 1fr);
 }
 .color-picker .color {
@@ -583,7 +588,8 @@ section.folders .folders-list .folder__percentage {
   transition: 0.3s ease-in-out;
 }
 .repeating-picker__btn:hover {
-  background-color: var(--gray-150);
+  color: var(--primary);
+  background-color: var(--primary-o-2);
 }
 .repeating-picker .item {
   padding: 10px;
@@ -608,11 +614,10 @@ section.folders .folders-list .folder__percentage {
   border-radius: 50%;
   color: #333333;
   background-color: #fff;
-  transform: translateX(100%);
   transition: transform 0.2s ease-in-out;
 }
 .dark-mode-switch__btn.active {
-  transform: translateX(0);
+  transform: translateX(100%);
 }
 .dark-mode-switch__btn svg {
   width: 100%;

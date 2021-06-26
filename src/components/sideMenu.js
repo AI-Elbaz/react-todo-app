@@ -31,23 +31,22 @@ const SideMenu = () => {
       to: '/folders',
       title: 'Folders',
       icon: <FolderRoundedIcon />,
-      badge: <span className="badge">{folders.length}</span>
     },
     {
       to: '/settings',
       title: 'Settings',
       icon: <SettingsRoundedIcon />,
-      badge: null,
     },
   ];
 
   return (
     <div className={`side-menu ${sideMenu ? "opened" : ""}`}>
       <ul className="menu">
-        <li>
-          <button className="side-menu__toggler" onClick={() => setSideMenu(!sideMenu)}>
+        <li className="item toggler" onClick={() => setSideMenu(!sideMenu)}>
+          <button className="side-menu__toggler">
             <MenuRoundedIcon />
           </button>
+          <p>My<span>Space</span></p>
         </li>
         {tabs.map(t =>
           <li>

@@ -12,7 +12,7 @@ const Folder = ({folder, handleClick, active}) => {
   return (
     <div className="folder-wrapper" style={{"--color": folder.color}}>
       <SettingsDropDown folderId={folder.id}/>
-      <div className={`folder ${active ? "active" : ""}`} onClick={() => handleClick(folder?.id)}>
+      <div className={`folder ${active ? "active" : ""}`} onClick={() => handleClick(folder)}>
         <FolderIcon className="folder__icon"/>
         <div className="folder__title-container">
           <div>

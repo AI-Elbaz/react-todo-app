@@ -27,6 +27,16 @@
   --side-menu-width: 60px;
   --side-menu-hover: rgba(0, 0, 0, 0.05);
   --dark-side-menu-hover: rgba(0, 0, 0, 0.25);
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+  --breakpoint-sm-width: 540px;
+  --breakpoint-md-width: 720px;
+  --breakpoint-lg-width: 960px;
+  --breakpoint-xl-width: 1140px;
+  --breakpoint-xxl-width: 1320px;
 }
 
 * {
@@ -123,27 +133,27 @@ section .container[data-empty]:empty::before {
 }
 @media only screen and (min-width: 576px) {
   .container {
-    max-width: 540px;
+    max-width: var(--breakpoint-sm-width);
   }
 }
 @media only screen and (min-width: 768px) {
   .container {
-    max-width: 720px;
+    max-width: var(--breakpoint-md-width);
   }
 }
 @media only screen and (min-width: 992px) {
   .container {
-    max-width: 960px;
+    max-width: var(--breakpoint-lg-width);
   }
 }
 @media only screen and (min-width: 1200px) {
   .container {
-    max-width: 1140px;
+    max-width: var(--breakpoint-xl-width);
   }
 }
 @media only screen and (min-width: 1400px) {
   .container {
-    max-width: 1320px;
+    max-width: var(--breakpoint-xxl-width);
   }
 }
 
@@ -207,18 +217,15 @@ nav .container > ul a.active {
   color: var(--gray-300);
 }
 
-.tasks > .container {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5em;
+.tasks .container {
+  max-width: var(--breakpoint-md-width);
 }
-@media only screen and (max-width: 992px) {
-  .tasks > .container {
-    flex-wrap: wrap-reverse;
-  }
-  .tasks > .container .tasks-list {
-    max-width: 100%;
-  }
+.tasks h2 {
+  color: var(--gray-400);
+  font-weight: 300;
+  font-size: 1.25em;
+  line-height: 1.5em;
+  margin-bottom: 0.5rem;
 }
 .tasks .tasks-list {
   display: flex;
@@ -227,12 +234,12 @@ nav .container > ul a.active {
   width: 100%;
   position: relative;
   flex-direction: column;
+  margin-bottom: 2rem;
 }
 .tasks .tasks-list .task {
   display: flex;
   gap: 1em;
   width: 100%;
-  max-width: 600px;
   cursor: pointer;
   position: relative;
   align-items: center;
@@ -257,6 +264,10 @@ nav .container > ul a.active {
   font-weight: 400;
   padding: 20px 0;
   color: var(--gray-400);
+}
+.tasks .tasks-list .task__title p {
+  height: 1.25em;
+  overflow: hidden;
 }
 
 section.folders .folders-wrapper {
@@ -361,10 +372,10 @@ section.folders .folders-list .folder__percentage {
   border-radius: 12px;
   padding: 10px;
   cursor: pointer;
-  background: var(--gray-200);
   font-size: 1.5em;
   line-height: 1em;
   color: var(--gray-400);
+  background: var(--foreground);
   font-family: "Material Icons";
 }
 
@@ -656,10 +667,19 @@ section.folders .folders-list .folder__percentage {
 .side-menu .item:hover {
   background: var(--side-menu-hover);
 }
+.side-menu .item.toggler {
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+}
+.side-menu .item.toggler span {
+  color: var(--primary);
+}
 .side-menu .item.active {
   color: var(--primary);
 }
-.side-menu .item svg {
+.side-menu .item > svg {
   font-size: 1.5em;
 }
 .side-menu .item .badge {
@@ -676,8 +696,8 @@ section.folders .folders-list .folder__percentage {
   border: none;
   cursor: pointer;
   background: none;
-  margin: 1rem;
   color: var(--gray-400);
+  font-family: "Material Icons";
 }
 .side-menu__toggler svg {
   font-size: 2.1em;
@@ -771,18 +791,28 @@ section.settings .settings-list__tile .setting {
 
 .section-header {
   display: flex;
-  gap: 2rem;
-  align-items: center !important;
+  gap: 0 !important;
   margin-bottom: 1rem;
+  color: var(--gray-400);
+  align-items: center !important;
+}
+.section-header .sep {
+  font-size: 1.5em;
+  margin: 0 10px;
+}
+.section-header > div {
+  align-items: center;
+  display: flex;
 }
 .section-header .create-btn {
   padding: 5px;
   cursor: pointer;
   font-size: 2rem;
+  margin-left: 1.5rem;
   border-radius: 50%;
   color: var(--primary);
-  background-color: var(--primary-o-2);
   transition: 0.3s ease-in-out;
+  background-color: var(--primary-o-2);
 }
 .section-header .create-btn:hover {
   background-color: var(--primary-o-3);

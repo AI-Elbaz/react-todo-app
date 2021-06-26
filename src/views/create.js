@@ -97,6 +97,7 @@ const Create = ({repository, showRepeating, store}) => {
   const tConv = (t) => {
     if (t == 0 || t == 24) return [12, 'AM'];
     else if (t == 12) return [12, 'PM'];
+    else if (t > 0) return [t, 'AM'];
     return [t-12, 'PM'];
   }
 

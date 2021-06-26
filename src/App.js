@@ -25,8 +25,8 @@ const App = () => {
     let newNotes = NotesRepo.getAllData();
 
     if (activeFolder) {
-      newTasks = newTasks.filter(t => t.folderId == activeFolder);
-      newNotes = newNotes.filter(t => t.folderId == activeFolder);
+      newTasks = newTasks.filter(t => t.folderId == activeFolder.id);
+      newNotes = newNotes.filter(t => t.folderId == activeFolder.id);
     }
 
     setTasks(newTasks);

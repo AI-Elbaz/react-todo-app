@@ -7,20 +7,20 @@ const Folders = () => {
   const [folders, setFolders, deleteFolders] = useStore('data.folders', FoldersRepo.getAllData());
   const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
 
-  const handleActiveFolder = (id) => {
-    setActiveFolder(activeFolder !== id ? id : null);
+  const handleActiveFolder = (folder) => {
+    setActiveFolder(activeFolder?.id !== folder.id ? folder : null);
   }
 
   return (
     <section className="folders">
-      <SectionHeader title='Folders' onCreate={() => setDialog(true)}/>
+      <SectionHeader title='Folders' onCreate={() => setDialog(true)} showActiveFolder={false}/>
       <div className="container" data-empty="Folders">
         {folders.length !== 0 && <div className="folders-list">
           {folders.map(f =>
             <Folder
               key={f.id}
               folder={f}
-              active={activeFolder == f.id}
+              active={activeFolder?.id == f.id}
               handleClick={handleActiveFolder} />)}
         </div>}
       </div>

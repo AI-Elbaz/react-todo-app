@@ -24,7 +24,7 @@ const FolderPicker = ({ value, onChange }) => {
 
   return (
     <Wrapper className='drop-down folder-picker' onSelection={handleSelect} onClick={showDialog}>
-      <Button className='active-folder' >
+      <Button className='active-folder'>
         <div
           className="folder-picker__color-dot"
           style={{ background: activeFolder?.color || "var(--gray-300)" }}>

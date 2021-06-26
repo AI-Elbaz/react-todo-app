@@ -22,7 +22,7 @@
 	--foreground: #fff;
 	--background: var(--gray-100);
 
-	--dark-foreground: hsl(213, 10%, 9%);
+	--dark-foreground: hsl(210, 9%, 9%);
 	--dark-background: hsl(210, 5%, 4%);
 
 	--folder-icon: #ffcb23;
@@ -130,7 +130,7 @@ input[type="checkbox"] {
 }
 
 section .container[data-empty]:empty {
-	margin: auto 0;
+	margin: auto;
 	text-align: center;
 
 	&::before {
@@ -371,8 +371,9 @@ section.folders {
 			border-radius: 12px;
 			border: 2px solid transparent;
 			background-color: var(--foreground);
+			overflow: hidden;
 			transition: border-color 0.3s ease-in-out;
-
+			
 			&.active {
 				border-color: var(--color);
 			}

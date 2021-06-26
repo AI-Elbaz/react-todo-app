@@ -16,7 +16,7 @@
   --red-o-2: hsla(357, 71%, 60%, 0.2);
   --foreground: #fff;
   --background: var(--gray-100);
-  --dark-foreground: hsl(213, 10%, 9%);
+  --dark-foreground: hsl(210, 9%, 9%);
   --dark-background: hsl(210, 5%, 4%);
   --folder-icon: #ffcb23;
   --border-color: var(--gray-200);
@@ -117,7 +117,7 @@ input[type=checkbox]:checked::before {
 }
 
 section .container[data-empty]:empty {
-  margin: auto 0;
+  margin: auto;
   text-align: center;
 }
 section .container[data-empty]:empty::before {
@@ -339,6 +339,7 @@ section.folders .folders-list .folder {
   border-radius: 12px;
   border: 2px solid transparent;
   background-color: var(--foreground);
+  overflow: hidden;
   transition: border-color 0.3s ease-in-out;
 }
 section.folders .folders-list .folder.active {

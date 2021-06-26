@@ -2,10 +2,10 @@ import { useStore } from "react-context-hook";
 import { useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router";
 import { FoldersRepo } from "../data/repository";
-import {BackButton, FolderPicker, RepeatingPicker} from '../components/components';
+import { BackButton, FolderPicker, RepeatingPicker } from '../components/components';
 
-const Create = ({repository, showRepeating, store}) => {
-  const {id} = useParams();
+const Create = ({ repository, showRepeating, store }) => {
+  const { id } = useParams();
   const history = useHistory();
   const form = useRef();
 
@@ -14,7 +14,7 @@ const Create = ({repository, showRepeating, store}) => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [tasks, setTasks, deleteTasks] = useStore(store);
+  const [, setTasks,] = useStore(store);
 
   const componentWillUnmount = useRef(false);
 
@@ -38,7 +38,7 @@ const Create = ({repository, showRepeating, store}) => {
         setFolder(FoldersRepo.getItem(task.folderId));
       }
     }
-  }, [id]);
+  }, [id, repository]);
 
   useEffect(() => {
     const f = form.current;
@@ -95,10 +95,10 @@ const Create = ({repository, showRepeating, store}) => {
   }
 
   const tConv = (t) => {
-    if (t == 0 || t == 24) return [12, 'AM'];
-    else if (t == 12) return [12, 'PM'];
+    if (t === 0 || t === 24) return [12, 'AM'];
+    else if (t === 12) return [12, 'PM'];
     else if (t > 0) return [t, 'AM'];
-    return [t-12, 'PM'];
+    return [t - 12, 'PM'];
   }
 
   const formatDate = (date) => {
@@ -119,7 +119,7 @@ const Create = ({repository, showRepeating, store}) => {
       'December'
     ];
     let h = tConv(d.getHours());
-    const zfill = (m) => m < 10 ? "0"+m : m;
+    const zfill = (m) => m < 10 ? "0" + m : m;
 
     return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${h[0]}:${zfill(d.getMinutes())}${h[1]}`;
   }
@@ -132,20 +132,20 @@ const Create = ({repository, showRepeating, store}) => {
     //   case repeatingOptions.DAILY:
     //     newDate = new Date(d).setDa
     //     break;
-    
+
     //   default:
     //     break;
     // }
   }
 
-  return ( 
+  return (
     <section className="create">
       <div className="container">
         <div className="header">
           <BackButton />
           {task && <p className="date">{formatDate(task.date)}</p>}
-          <FolderPicker value={folder} onChange={setFolder}/>
-          {showRepeating && <RepeatingPicker options={repeatingOptions} onChange={handleRepeatingChange}/>}
+          <FolderPicker value={folder} onChange={setFolder} />
+          {showRepeating && <RepeatingPicker options={repeatingOptions} onChange={handleRepeatingChange} />}
           {task && <button className="delete-btn" onClick={handleDelete}>Delete</button>}
         </div>
         <form ref={form} className="edit-form">
@@ -166,5 +166,5 @@ const Create = ({repository, showRepeating, store}) => {
     </section>
   );
 }
- 
+
 export default Create;

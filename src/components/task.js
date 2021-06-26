@@ -6,7 +6,7 @@ import { useStore } from "react-context-hook";
 const Task = ({ task }) => {
   const folder = FoldersRepo.getItem(task.folderId);
   const [completed, setCompleted] = useState(task.completed);
-  const [tasks, setTasks, deleteTasks] = useStore('data.tasks');
+  const [, setTasks,] = useStore('data.tasks');
 
   const handleCheck = (e) => {
     let checked = e.target.checked;

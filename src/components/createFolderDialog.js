@@ -1,5 +1,5 @@
-import {ColorPicker} from './components';
-import {useState, useEffect} from 'react';
+import { ColorPicker } from './components';
+import { useState, useEffect } from 'react';
 import { useStore } from 'react-context-hook';
 import { FoldersRepo } from '../data/repository';
 
@@ -9,8 +9,8 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 const CreateDialog = () => {
   const [title, setTitle] = useState('');
   const [color, setColor] = useState(null);
-  const [folders, setFolders, deleteFolders] = useStore('data.folders');
-  const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
+  const [, setFolders,] = useStore('data.folders');
+  const [, setDialog,] = useStore('showCreateFolderDialog');
 
   useEffect(() => {
     window.onscroll = () => window.scrollTo(0, 0);
@@ -20,7 +20,7 @@ const CreateDialog = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title !== "") {
-      FoldersRepo.insertItem({title, color});
+      FoldersRepo.insertItem({ title, color });
     }
     setFolders(FoldersRepo.getAllData());
     setDialog(false);
@@ -37,7 +37,7 @@ const CreateDialog = () => {
             <CloseRoundedIcon />
           </button>
         </div>
-        <FolderIcon style={{color: color}} className='preview-icon'/>
+        <FolderIcon style={{ color: color }} className='preview-icon' />
         <div className="form">
           <input
             required
@@ -46,7 +46,7 @@ const CreateDialog = () => {
             placeholder="Folder title"
             onChange={e => setTitle(e.target.value)}
           />
-          <ColorPicker onChange={setColor}/>
+          <ColorPicker onChange={setColor} />
           <input
             type="submit"
             value="Create"

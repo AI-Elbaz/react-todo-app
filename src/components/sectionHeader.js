@@ -2,7 +2,7 @@ import { useStore } from 'react-context-hook';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 
 const SectionHeader = ({ title, onCreate, showActiveFolder = true }) => {
-  const [activeFolder, setActiveFolder, deleteActiveFolder] = useStore('activeFolder');
+  const [activeFolder, ,] = useStore('activeFolder');
 
   return (
     <div className="container section-header">

@@ -37,7 +37,7 @@ class Repository {
   getItem = (id) => {
     let data = this.getAllData();
     if (Array.isArray(data)) {
-      return data.filter(i => i.id == id)[0];
+      return data.filter(i => i.id === parseInt(id))[0];
     } else {
       return data;
     }

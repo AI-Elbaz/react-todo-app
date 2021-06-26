@@ -6,18 +6,18 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { TasksRepo, FoldersRepo, NotesRepo, SettingsRepo } from './data/repository';
 
 const App = () => {
-  const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
-  const [activeFolder, setactiveFolder, deleteactiveFolder] = useStore('activeFolder');
-  const [tasks, setTasks, deleteTasks] = useStore('data.tasks');
-  const [notes, setNotes, deleteNotes] = useStore('data.notes');
-  const [darkMode, setDarkMode, deleteDarkMode] = useStore('darkMode');
+  const [dialog, ,] = useStore('showCreateFolderDialog');
+  const [activeFolder, ,] = useStore('activeFolder');
+  const [, setTasks,] = useStore('data.tasks');
+  const [, setNotes,] = useStore('data.notes');
+  const [darkMode, ,] = useStore('darkMode');
 
   useEffect(() => {
     const r = document.querySelector('html');
     r.className = darkMode ? "dark-mode" : "";
 
-    if (darkMode) SettingsRepo.setData({'darkMode': true});
-    else SettingsRepo.setData({'darkMode': false});
+    if (darkMode) SettingsRepo.setData({ 'darkMode': true });
+    else SettingsRepo.setData({ 'darkMode': false });
   }, [darkMode]);
 
   useEffect(() => {
@@ -25,8 +25,8 @@ const App = () => {
     let newNotes = NotesRepo.getAllData();
 
     if (activeFolder) {
-      newTasks = newTasks.filter(t => t.folderId == activeFolder.id);
-      newNotes = newNotes.filter(t => t.folderId == activeFolder.id);
+      newTasks = newTasks.filter(t => t.folderId === activeFolder.id);
+      newNotes = newNotes.filter(t => t.folderId === activeFolder.id);
     }
 
     setTasks(newTasks);

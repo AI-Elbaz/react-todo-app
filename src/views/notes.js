@@ -4,7 +4,7 @@ import { Note, SectionHeader } from '../components/components';
 import { NotesRepo } from '../data/repository';
 
 const Notes = () => {
-  const [notes, setNotes, deleteNotes] = useStore('data.notes', NotesRepo.getAllData());
+  const [notes, ,] = useStore('data.notes', NotesRepo.getAllData());
   const history = useHistory();
 
   return (

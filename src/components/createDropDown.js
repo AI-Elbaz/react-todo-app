@@ -4,13 +4,13 @@ import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
 
 const CreateDropDown = () => {
   const history = useHistory();
-  const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
+  const [, setDialog,] = useStore('showCreateFolderDialog');
   const options = ['Task', 'Note', 'Folder'];
 
   const handleSelection = (v, e) => {
     if (v === 'Task') history.push('/task');
-    else if (v == 'Note') history.push('/note');
-    else if (v == 'Folder') setDialog(true);
+    else if (v === 'Note') history.push('/note');
+    else if (v === 'Folder') setDialog(true);
   }
 
   return (
@@ -18,7 +18,7 @@ const CreateDropDown = () => {
       <Button className='nav__create-btn'>Create</Button>
       <Menu className='menu'>
         <ul>
-          {options.map(i => 
+          {options.map(i =>
             <li key={i} className="item">
               <MenuItem >{i}</MenuItem>
             </li>
@@ -28,5 +28,5 @@ const CreateDropDown = () => {
     </Wrapper>
   );
 }
- 
+
 export default CreateDropDown;

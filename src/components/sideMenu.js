@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useStore } from "react-context-hook";
-import { TasksRepo, FoldersRepo, NotesRepo } from "../data/repository";
+import { TasksRepo, NotesRepo } from "../data/repository";
 
 import AssignmentTurnedInRoundedIcon from '@material-ui/icons/AssignmentTurnedInRounded';
 import AssignmentRoundedIcon from '@material-ui/icons/AssignmentRounded';
@@ -9,10 +9,9 @@ import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 
 const SideMenu = () => {
-  const [tasks, setTasks, deleteTasks] = useStore('data.tasks', TasksRepo.getAllData());
-  const [folders, setFolders, deleteFolders] = useStore('data.folders', FoldersRepo.getAllData());
-  const [notes, setNotes, deleteNotes] = useStore('data.notes', NotesRepo.getAllData());
-  const [sideMenu, setSideMenu, deleteSideMenu] = useStore('sideMenu');
+  const [tasks, ,] = useStore('data.tasks', TasksRepo.getAllData());
+  const [notes, ,] = useStore('data.notes', NotesRepo.getAllData());
+  const [sideMenu, setSideMenu,] = useStore('sideMenu');
 
   const tabs = [
     {
@@ -49,7 +48,7 @@ const SideMenu = () => {
           <p>My<span>Space</span></p>
         </li>
         {tabs.map(t =>
-          <li>
+          <li key={t.title}>
             <NavLink exact to={t.to} className='item' onClick={() => setSideMenu(false)} activeClassName='active'>
               {t.icon}
               {t.title}

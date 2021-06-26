@@ -6,7 +6,7 @@ import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
 const FolderPicker = ({ value, onChange }) => {
   const folders = FoldersRepo.getAllData();
   const [activeFolder, setActiveFolder] = useState(null);
-  const [dialog, setDialog, deleteDialog] = useStore('showCreateFolderDialog');
+  const [, setDialog,] = useStore('showCreateFolderDialog');
 
   useEffect(() => {
     setActiveFolder(value);
@@ -19,7 +19,7 @@ const FolderPicker = ({ value, onChange }) => {
   }
 
   const showDialog = () => {
-    if (folders.length == 0) setDialog(true);
+    if (folders.length === 0) setDialog(true);
   }
 
   return (
@@ -29,7 +29,7 @@ const FolderPicker = ({ value, onChange }) => {
           className="folder-picker__color-dot"
           style={{ background: activeFolder?.color || "var(--gray-300)" }}>
         </div>
-        {activeFolder?.title || (folders.length == 0 ? "Create Folder" : "Choose folder")}
+        {activeFolder?.title || (folders.length === 0 ? "Create Folder" : "Choose folder")}
       </Button>
       <Menu className='menu'>
         <ul>
